@@ -10,9 +10,12 @@ export default function Login({ onLogin }) {
 
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const submit = async () => {
+    if (!form.email || !form.password) {
+      setError("Please enter your email address and password."); return;
+    }
     setError(""); setLoading(true);
     try { await onLogin(form.email, form.password); navigate("/levels"); }
-    catch (err) { setError(err.response?.data?.message || "Invalid credentials. Please try again."); }
+    catch (err) { setError(err.response?.data?.message || "Incorrect email or password. Please try again."); }
     finally { setLoading(false); }
   };
 
@@ -21,13 +24,13 @@ export default function Login({ onLogin }) {
       display:"flex", alignItems:"center", justifyContent:"center",
       padding:"1.5rem var(--px)", background:"var(--bg)" }}>
 
-      {/* BG circles */}
-      <div style={{ position:"fixed", top:"-15%", right:"-8%", width:"min(400px,80vw)",
-        height:"min(400px,80vw)", borderRadius:"50%",
+      <div style={{ position:"fixed", top:"-15%", right:"-8%",
+        width:"min(400px,80vw)", height:"min(400px,80vw)", borderRadius:"50%",
         background:"radial-gradient(circle,rgba(46,184,92,0.07) 0%,transparent 70%)",
         pointerEvents:"none" }} />
 
       <div style={{ width:"100%", maxWidth:420 }} className="fade-in">
+
         <div style={{ textAlign:"center", marginBottom:28 }}>
           <div style={{ display:"flex", justifyContent:"center", marginBottom:18 }}>
             <Logo size="md" />
@@ -35,17 +38,17 @@ export default function Login({ onLogin }) {
           <h1 style={{ fontFamily:"var(--display)", fontWeight:800,
             fontSize:"var(--fs-xl)", color:"var(--ink)",
             marginBottom:8, letterSpacing:"-0.4px" }}>
-            Sign In
+            Sign In to Academix
           </h1>
           <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)",
-            color:"var(--ink3)", fontWeight:300, lineHeight:1.6 }}>
-            Access the BAIUST Academix repository
+            color:"var(--ink3)", fontWeight:300, lineHeight:1.65 }}>
+            Use your registered BAIUST student credentials to access the platform.
           </p>
         </div>
 
         <div className="card" style={{ padding:"clamp(1.25rem,5vw,2rem)",
           borderRadius:"var(--r-xl)" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+          <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
 
             <div className="form-group">
               <label className="form-label">Email Address</label>
@@ -55,9 +58,10 @@ export default function Login({ onLogin }) {
                   color:"var(--ink4)", pointerEvents:"none" }}>mail</span>
                 <input className="form-input" name="email" type="email"
                   autoComplete="email"
-                  placeholder="your.email@baiust.ac.bd"
+                  placeholder="name@gmail.com"
                   value={form.email} onChange={handle}
-                  style={{ paddingLeft:40 }} />
+                  onKeyDown={e => e.key==="Enter" && submit()}
+                  style={{ paddingLeft:42 }} />
               </div>
             </div>
 
@@ -72,8 +76,21 @@ export default function Login({ onLogin }) {
                   placeholder="Enter your password"
                   value={form.password} onChange={handle}
                   onKeyDown={e => e.key==="Enter" && submit()}
-                  style={{ paddingLeft:40 }} />
+                  style={{ paddingLeft:42 }} />
               </div>
+            </div>
+
+            {/* Approval info box */}
+            <div style={{ background:"var(--pale)", border:"1px solid rgba(26,122,60,0.18)",
+              borderRadius:"var(--r-md)", padding:"10px 14px",
+              display:"flex", alignItems:"flex-start", gap:8 }}>
+              <span className="ms sm" style={{ color:"var(--leaf)", flexShrink:0, marginTop:1 }}>
+                info
+              </span>
+              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                color:"var(--ink3)", lineHeight:1.65 }}>
+                New registrations require administrator approval before sign-in is permitted.
+              </p>
             </div>
 
             {error && (
@@ -94,9 +111,9 @@ export default function Login({ onLogin }) {
 
         <p style={{ marginTop:18, textAlign:"center",
           fontFamily:"var(--body)", fontSize:"var(--fs-sm)", color:"var(--ink3)" }}>
-          No account?{" "}
+          Don't have an account?{" "}
           <Link to="/register" style={{ color:"var(--leaf)", fontWeight:700,
-            fontFamily:"var(--display)" }}>Register free</Link>
+            fontFamily:"var(--display)" }}>Register here</Link>
         </p>
       </div>
     </div>

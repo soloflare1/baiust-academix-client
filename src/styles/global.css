@@ -39,6 +39,11 @@
   --body:    'Inter', system-ui, sans-serif;
   --mono:    'DM Mono', monospace;
 
+  --display: 'Playfair Display', Georgia, serif;
+  --serif:   'Playfair Display', Georgia, serif;
+  --body:    'Inter', system-ui, sans-serif;
+  --mono:    'DM Mono', monospace;
+
   --sh-sm: 0 1px 4px rgba(0,0,0,0.06);
   --sh-md: 0 4px 20px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
   --sh-lg: 0 8px 32px rgba(0,0,0,0.10);
@@ -88,7 +93,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   font-family: var(--body);
@@ -111,7 +116,7 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
   font-weight: normal; font-style: normal;
   font-size: 20px; line-height: 1;
   display: inline-flex; align-items: center; justify-content: center;
-  user-select: none; flex-shrink: 0; vertical-align: middle;
+  -webkit-user-select: none; user-select: none; flex-shrink: 0; vertical-align: middle;
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
 }
 .ms.fill { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20; }

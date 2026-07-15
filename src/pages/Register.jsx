@@ -3,22 +3,23 @@ import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
 import api from "../utils/api";
 
-const fields = [
-  { name:"name",      icon:"person", label:"Full Name",     type:"text",     placeholder:"e.g. Nosratee Jahan Naba", auto:"name" },
-  { name:"email",     icon:"mail",   label:"Email Address", type:"email",    placeholder:"your.email@baiust.ac.bd",  auto:"email" },
-  { name:"studentId", icon:"badge",  label:"Student ID",    type:"text",     placeholder:"e.g. 21CSE001",            auto:"off" },
-  { name:"password",  icon:"lock",   label:"Password",      type:"password", placeholder:"Minimum 8 characters",     auto:"new-password" },
-];
-
 export default function Register() {
-  const [form, setForm]       = useState({ name:"", email:"", studentId:"", password:"" });
-  const [error, setError]     = useState("");
+  const [form, setForm] = useState({
+    name:"", email:"", studentId:"", password:""
+  });
+  const [error,   setError]   = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const submit = async () => {
+    if (!form.name || !form.email || !form.studentId || !form.password) {
+      setError("All fields are required. Please fill in the complete form."); return;
+    }
+    if (form.password.length < 8) {
+      setError("Password must be at least 8 characters long."); return;
+    }
     setError(""); setLoading(true);
     try {
       await api.post("/auth/register", form);
@@ -28,7 +29,7 @@ export default function Register() {
       if (msg.toLowerCase().includes("pending") || msg.toLowerCase().includes("approval")) {
         setSuccess(true);
       } else {
-        setError(msg || "Registration failed. Please check your details.");
+        setError(msg || "Registration failed. Please verify your details and try again.");
       }
     } finally { setLoading(false); }
   };
@@ -37,7 +38,7 @@ export default function Register() {
     <div style={{ minHeight:"calc(100vh - var(--nav-h))",
       display:"flex", alignItems:"center", justifyContent:"center",
       padding:"1.5rem var(--px)", background:"var(--bg)" }}>
-      <div style={{ width:"100%", maxWidth:440, textAlign:"center" }} className="fade-in">
+      <div style={{ width:"100%", maxWidth:460, textAlign:"center" }} className="fade-in">
         <div style={{ width:68, height:68, borderRadius:"50%",
           background:"linear-gradient(135deg,var(--mint),var(--glow))",
           display:"flex", alignItems:"center", justifyContent:"center",
@@ -49,20 +50,23 @@ export default function Register() {
         </div>
         <h2 style={{ fontFamily:"var(--display)", fontWeight:800,
           fontSize:"var(--fs-xl)", color:"var(--ink)",
-          marginBottom:12, letterSpacing:"-0.4px" }}>
-          Registration Submitted!
+          marginBottom:14, letterSpacing:"-0.4px" }}>
+          Registration Submitted
         </h2>
         <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-base)",
-          color:"var(--ink3)", lineHeight:1.75,
-          fontWeight:300, marginBottom:28, maxWidth:340, margin:"0 auto 28px" }}>
-          Your account is awaiting administrator approval.{" "}
-          <strong style={{ color:"var(--leaf)", fontWeight:600 }}>
-            You can sign in once approved.
-          </strong>
+          color:"var(--ink3)", lineHeight:1.78,
+          fontWeight:300, marginBottom:10, maxWidth:380, margin:"0 auto 10px" }}>
+          Your registration request has been submitted successfully.
+        </p>
+        <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-base)",
+          color:"var(--ink2)", lineHeight:1.78, fontWeight:400,
+          marginBottom:28, maxWidth:380, margin:"0 auto 28px" }}>
+          Your account is <strong style={{ color:"var(--leaf)" }}>pending administrator approval</strong>.
+          You will be able to sign in once your account has been reviewed and activated.
         </p>
         <Link to="/login" className="btn btn-primary"
           style={{ fontSize:"var(--fs-base)", padding:"12px 28px" }}>
-          <span className="ms sm">login</span> Go to Sign In
+          <span className="ms sm">login</span> Return to Sign In
         </Link>
       </div>
     </div>
@@ -73,7 +77,13 @@ export default function Register() {
       display:"flex", alignItems:"center", justifyContent:"center",
       padding:"1.5rem var(--px)", background:"var(--bg)" }}>
 
-      <div style={{ width:"100%", maxWidth:420 }} className="fade-in">
+      <div style={{ position:"fixed", top:"-10%", left:"-5%",
+        width:"min(400px,80vw)", height:"min(400px,80vw)", borderRadius:"50%",
+        background:"radial-gradient(circle,rgba(46,184,92,0.06) 0%,transparent 70%)",
+        pointerEvents:"none" }} />
+
+      <div style={{ width:"100%", maxWidth:440 }} className="fade-in">
+
         <div style={{ textAlign:"center", marginBottom:28 }}>
           <div style={{ display:"flex", justifyContent:"center", marginBottom:18 }}>
             <Logo size="md" />
@@ -81,32 +91,90 @@ export default function Register() {
           <h1 style={{ fontFamily:"var(--display)", fontWeight:800,
             fontSize:"var(--fs-xl)", color:"var(--ink)",
             marginBottom:8, letterSpacing:"-0.4px" }}>
-            Create Account
+            Student Registration
           </h1>
           <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)",
-            color:"var(--ink3)", fontWeight:300, lineHeight:1.6 }}>
-            Registration requires administrator approval before sign-in.
+            color:"var(--ink3)", fontWeight:300, lineHeight:1.65 }}>
+            Register to request access to the BAIUST Academix platform.
+            All registrations are subject to administrator approval.
           </p>
         </div>
 
         <div className="card" style={{ padding:"clamp(1.25rem,5vw,2rem)",
           borderRadius:"var(--r-xl)" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
-            {fields.map(f => (
-              <div className="form-group" key={f.name}>
-                <label className="form-label">{f.label}</label>
-                <div style={{ position:"relative" }}>
-                  <span className="ms sm" style={{ position:"absolute", left:14,
-                    top:"50%", transform:"translateY(-50%)",
-                    color:"var(--ink4)", pointerEvents:"none" }}>{f.icon}</span>
-                  <input className="form-input" name={f.name} type={f.type}
-                    autoComplete={f.auto}
-                    placeholder={f.placeholder} value={form[f.name]} onChange={handle}
-                    onKeyDown={e => e.key==="Enter" && submit()}
-                    style={{ paddingLeft:40 }} />
-                </div>
+          <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+
+            {/* Full Name */}
+            <div className="form-group">
+              <label className="form-label">Full Name *</label>
+              <div style={{ position:"relative" }}>
+                <span className="ms sm" style={{ position:"absolute", left:14,
+                  top:"50%", transform:"translateY(-50%)",
+                  color:"var(--ink4)", pointerEvents:"none" }}>person</span>
+                <input className="form-input" name="name" type="text"
+                  autoComplete="name"
+                  placeholder="As per university records"
+                  value={form.name} onChange={handle}
+                  onKeyDown={e => e.key==="Enter" && submit()}
+                  style={{ paddingLeft:42 }} />
               </div>
-            ))}
+            </div>
+
+            {/* Email */}
+            <div className="form-group">
+              <label className="form-label">Email Address *</label>
+              <div style={{ position:"relative" }}>
+                <span className="ms sm" style={{ position:"absolute", left:14,
+                  top:"50%", transform:"translateY(-50%)",
+                  color:"var(--ink4)", pointerEvents:"none" }}>mail</span>
+                <input className="form-input" name="email" type="email"
+                  autoComplete="email"
+                  placeholder="name@gmail.com"
+                  value={form.email} onChange={handle}
+                  onKeyDown={e => e.key==="Enter" && submit()}
+                  style={{ paddingLeft:42 }} />
+              </div>
+            </div>
+
+            {/* Student ID */}
+            <div className="form-group">
+              <label className="form-label">Student ID *</label>
+              <div style={{ position:"relative" }}>
+                <span className="ms sm" style={{ position:"absolute", left:14,
+                  top:"50%", transform:"translateY(-50%)",
+                  color:"var(--ink4)", pointerEvents:"none" }}>badge</span>
+                <input className="form-input" name="studentId" type="text"
+                  autoComplete="off"
+                  placeholder="e.g. 1118005"
+                  value={form.studentId} onChange={handle}
+                  onKeyDown={e => e.key==="Enter" && submit()}
+                  style={{ paddingLeft:42 }} />
+              </div>
+              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                color:"var(--ink4)", marginTop:4 }}>
+                Enter your official BAIUST student ID number.
+              </p>
+            </div>
+
+            {/* Password */}
+            <div className="form-group">
+              <label className="form-label">Password *</label>
+              <div style={{ position:"relative" }}>
+                <span className="ms sm" style={{ position:"absolute", left:14,
+                  top:"50%", transform:"translateY(-50%)",
+                  color:"var(--ink4)", pointerEvents:"none" }}>lock</span>
+                <input className="form-input" name="password" type="password"
+                  autoComplete="new-password"
+                  placeholder="Minimum 8 characters"
+                  value={form.password} onChange={handle}
+                  onKeyDown={e => e.key==="Enter" && submit()}
+                  style={{ paddingLeft:42 }} />
+              </div>
+              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                color:"var(--ink4)", marginTop:4 }}>
+                Choose a strong password of at least 8 characters.
+              </p>
+            </div>
 
             {error && (
               <div className="error-box">
@@ -115,20 +183,34 @@ export default function Register() {
               </div>
             )}
 
+            {/* Approval notice */}
+            <div style={{ background:"var(--pale)", border:"1px solid rgba(26,122,60,0.18)",
+              borderRadius:"var(--r-md)", padding:"10px 14px",
+              display:"flex", alignItems:"flex-start", gap:8 }}>
+              <span className="ms sm" style={{ color:"var(--leaf)", flexShrink:0, marginTop:1 }}>
+                info
+              </span>
+              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                color:"var(--ink3)", lineHeight:1.65 }}>
+                Your account will be activated after review by the platform administrator.
+                You will not be able to sign in until your registration is approved.
+              </p>
+            </div>
+
             <button className="btn btn-primary" onClick={submit} disabled={loading}
               style={{ width:"100%", marginTop:4, fontSize:"var(--fs-base)",
                 borderRadius:"var(--r-pill)" }}>
               <span className="ms sm">{loading ? "progress_activity" : "person_add"}</span>
-              {loading ? "Submitting…" : "Submit Registration"}
+              {loading ? "Submitting Registration…" : "Submit Registration"}
             </button>
           </div>
         </div>
 
         <p style={{ marginTop:18, textAlign:"center",
           fontFamily:"var(--body)", fontSize:"var(--fs-sm)", color:"var(--ink3)" }}>
-          Already registered?{" "}
+          Already have an account?{" "}
           <Link to="/login" style={{ color:"var(--leaf)", fontWeight:700,
-            fontFamily:"var(--display)" }}>Sign in</Link>
+            fontFamily:"var(--display)" }}>Sign in here</Link>
         </p>
       </div>
     </div>
