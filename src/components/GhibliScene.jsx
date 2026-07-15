@@ -1,10 +1,3 @@
-/**
- * CSE-themed illustrations
- * To swap for a real image/GIF:
- *   <div className="illus" style={{height:280}}>
- *     <img src="/illustrations/cse.gif" alt="CSE" />
- *   </div>
- */
 
 export function GhibliLibrary({ style = {} }) {
   return (
@@ -13,7 +6,7 @@ export function GhibliLibrary({ style = {} }) {
       <svg viewBox="0 0 520 300" xmlns="http://www.w3.org/2000/svg"
         style={{ width:"100%", height:"100%" }}>
 
-        {/* ── Background grid (code editor feel) ── */}
+      
         <defs>
           <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
             <path d="M 28 0 L 0 0 0 28" fill="none" stroke="rgba(78,222,128,0.06)" strokeWidth="0.5"/>
