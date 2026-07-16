@@ -1,14 +1,17 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
 
 export default function Login({ onLogin }) {
   const [form, setForm]       = useState({ email:"", password:"" });
   const [error, setError]     = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
+  const location  = useLocation();
+  const isAdmin   = location.pathname === "/admin/login";
 
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
   const submit = async () => {
     if (!form.email || !form.password) {
       setError("Please enter your email address and password."); return;
@@ -24,11 +27,6 @@ export default function Login({ onLogin }) {
       display:"flex", alignItems:"center", justifyContent:"center",
       padding:"1.5rem var(--px)", background:"var(--bg)" }}>
 
-      <div style={{ position:"fixed", top:"-15%", right:"-8%",
-        width:"min(400px,80vw)", height:"min(400px,80vw)", borderRadius:"50%",
-        background:"radial-gradient(circle,rgba(46,184,92,0.07) 0%,transparent 70%)",
-        pointerEvents:"none" }} />
-
       <div style={{ width:"100%", maxWidth:420 }} className="fade-in">
 
         <div style={{ textAlign:"center", marginBottom:28 }}>
@@ -38,18 +36,34 @@ export default function Login({ onLogin }) {
           <h1 style={{ fontFamily:"var(--display)", fontWeight:800,
             fontSize:"var(--fs-xl)", color:"var(--ink)",
             marginBottom:8, letterSpacing:"-0.4px" }}>
-            Sign In to Academix
+            {isAdmin ? "Administrator Sign In" : "Sign In to Academix"}
           </h1>
           <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)",
             color:"var(--ink3)", fontWeight:300, lineHeight:1.65 }}>
-            Use your registered BAIUST student credentials to access the platform.
+            {isAdmin
+              ? "Sign in with your administrator credentials to access the admin panel."
+              : "Use your registered BAIUST student credentials to access the platform."}
           </p>
         </div>
 
         <div className="card" style={{ padding:"clamp(1.25rem,5vw,2rem)",
           borderRadius:"var(--r-xl)" }}>
-          <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
 
+          {isAdmin && (
+            <div style={{ background:"#fffbeb", border:"1px solid #fde68a",
+              borderRadius:"var(--r-md)", padding:"10px 14px", marginBottom:18,
+              display:"flex", alignItems:"center", gap:8 }}>
+              <span className="ms sm" style={{ color:"#d4a017", flexShrink:0 }}>
+                admin_panel_settings
+              </span>
+              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                color:"#92400e", lineHeight:1.65 }}>
+                You are signing in as an administrator. This area is restricted.
+              </p>
+            </div>
+          )}
+
+          <div style={{ display:"flex", flexDirection:"column", gap:18 }}>
             <div className="form-group">
               <label className="form-label">Email Address</label>
               <div style={{ position:"relative" }}>
@@ -58,7 +72,7 @@ export default function Login({ onLogin }) {
                   color:"var(--ink4)", pointerEvents:"none" }}>mail</span>
                 <input className="form-input" name="email" type="email"
                   autoComplete="email"
-                  placeholder="name@gmail.com"
+                  placeholder="Enter your registered email"
                   value={form.email} onChange={handle}
                   onKeyDown={e => e.key==="Enter" && submit()}
                   style={{ paddingLeft:42 }} />
@@ -80,18 +94,17 @@ export default function Login({ onLogin }) {
               </div>
             </div>
 
-            {/* Approval info box */}
-            <div style={{ background:"var(--pale)", border:"1px solid rgba(26,122,60,0.18)",
-              borderRadius:"var(--r-md)", padding:"10px 14px",
-              display:"flex", alignItems:"flex-start", gap:8 }}>
-              <span className="ms sm" style={{ color:"var(--leaf)", flexShrink:0, marginTop:1 }}>
-                info
-              </span>
-              <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
-                color:"var(--ink3)", lineHeight:1.65 }}>
-                New registrations require administrator approval before sign-in is permitted.
-              </p>
-            </div>
+            {!isAdmin && (
+              <div style={{ background:"var(--pale)", border:"1px solid rgba(26,122,60,0.18)",
+                borderRadius:"var(--r-md)", padding:"10px 14px",
+                display:"flex", alignItems:"flex-start", gap:8 }}>
+                <span className="ms sm" style={{ color:"var(--leaf)", flexShrink:0, marginTop:1 }}>info</span>
+                <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
+                  color:"var(--ink3)", lineHeight:1.65 }}>
+                  New registrations require administrator approval before sign-in is permitted.
+                </p>
+              </div>
+            )}
 
             {error && (
               <div className="error-box">
@@ -106,6 +119,39 @@ export default function Login({ onLogin }) {
               <span className="ms sm">{loading ? "progress_activity" : "login"}</span>
               {loading ? "Signing in…" : "Sign In"}
             </button>
+
+            {!isAdmin ? (
+              <Link to="/admin/login" style={{
+                display:"flex", alignItems:"center", justifyContent:"center", gap:7,
+                padding:"10px", borderRadius:"var(--r-md)",
+                border:"1px dashed rgba(212,160,23,0.40)",
+                background:"rgba(212,160,23,0.04)",
+                fontFamily:"var(--display)", fontSize:"var(--fs-xs)",
+                fontWeight:600, color:"#92400e",
+                textDecoration:"none",
+                transition:"all 0.15s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background="rgba(212,160,23,0.10)"; e.currentTarget.style.borderColor="rgba(212,160,23,0.60)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background="rgba(212,160,23,0.04)"; e.currentTarget.style.borderColor="rgba(212,160,23,0.40)"; }}
+              >
+                <span className="ms sm" style={{ color:"#d4a017" }}>admin_panel_settings</span>
+                Administrator Sign In
+              </Link>
+            ) : (
+              <Link to="/login" style={{
+                display:"flex", alignItems:"center", justifyContent:"center", gap:7,
+                padding:"10px", borderRadius:"var(--r-md)",
+                border:"1px dashed var(--border2)",
+                background:"var(--card2)",
+                fontFamily:"var(--display)", fontSize:"var(--fs-xs)",
+                fontWeight:600, color:"var(--ink3)",
+                textDecoration:"none",
+                transition:"all 0.15s",
+              }}>
+                <span className="ms sm">arrow_back</span>
+                Back to Student Sign In
+              </Link>
+            )}
           </div>
         </div>
 

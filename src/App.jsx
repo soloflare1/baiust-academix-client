@@ -21,8 +21,7 @@ export default function App() {
 
   if (loading) return (
     <div style={{ minHeight:"100vh", display:"flex", alignItems:"center",
-      justifyContent:"center", flexDirection:"column", gap:14,
-      background:"var(--bg)" }}>
+      justifyContent:"center", flexDirection:"column", gap:14, background:"var(--bg)" }}>
       <div style={{ width:52, height:52, borderRadius:"50%",
         background:"linear-gradient(135deg,var(--mint),var(--glow))",
         display:"flex", alignItems:"center", justifyContent:"center",
@@ -31,9 +30,7 @@ export default function App() {
         <span className="ms lg fill" style={{ color:"var(--forest)", fontSize:24 }}>school</span>
       </div>
       <span style={{ fontFamily:"var(--display)", fontWeight:700,
-        fontSize:"var(--fs-base)", color:"var(--ink3)" }}>
-        Loading Academix…
-      </span>
+        fontSize:"var(--fs-base)", color:"var(--ink3)" }}>Loading Academix…</span>
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
@@ -47,6 +44,7 @@ export default function App() {
           <Routes>
             <Route path="/"                   element={user ? <Navigate to="/levels" replace /> : <Home />} />
             <Route path="/login"              element={<Login    onLogin={login}       />} />
+            <Route path="/admin/login"        element={<Login    onLogin={login}       />} />
             <Route path="/register"           element={<Register onRegister={register} />} />
             <Route path="/levels"             element={<Private><LevelTerm    user={user} /></Private>} />
             <Route path="/semester/:semId"    element={<Private><Courses /></Private>} />
