@@ -1,6 +1,10 @@
 # BAIUST Academix — Client
 
-BAIUST Academix is a centralised academic resource sharing platform developed for students of the Department of CSE, BAIUST. This repository contains the frontend client application.
+BAIUST Academix consolidates the academic resources of the Department of Computer Science and Engineering, BAIUST — previously scattered across messaging groups, personal drives and informal peer sharing — into a single structured, searchable and administrator-verified platform accessible to every enrolled CSE student.
+
+The platform covers the complete 8-semester BAIUST CSE curriculum, providing organised access to course textbooks, lecture notes and instructional video content across 60+ registered courses, from Level 1.1 through Level 4.2.
+
+This repository contains the frontend client application.
 
 ## Live Deployment
 
