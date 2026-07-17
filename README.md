@@ -1,6 +1,6 @@
 # BAIUST Academix — Client
 
-BAIUST Academix is a centralised academic resource sharing platform developed for students of the Department of Computer Science and Engineering, Bangladesh Army International University of Science and Technology (BAIUST). This repository contains the frontend client application.
+BAIUST Academix is a centralised academic resource sharing platform developed for students of the Department of CSE, BAIUST. This repository contains the frontend client application.
 
 ## Live Deployment
 
@@ -48,11 +48,13 @@ src/
 
 ## Environment Configuration
 
-Create a `.env.local` file in the project root directory with the following variable:
+Configure the following environment variable in your deployment platform (Vercel) or create a `.env` file for local development:
 
 ```
 VITE_API_URL=https://baiust-academix-server.onrender.com/api
 ```
+
+For production deployment on Vercel, this variable is set directly in the Vercel project dashboard under Settings > Environment Variables.
 
 ## Installation and Setup
 
@@ -96,9 +98,10 @@ npm run build
 
 - Student registrations require administrator approval before access is granted.
 - The 401 response interceptor in api.js is configured to redirect to the login page only when the user is not already on the login or registration route, preventing redirect loops.
+- The vercel.json file configures URL rewrites to support client-side routing on Vercel.
 
 ---
 
 Developed by Nosratee Jahan Naba
-Department of CSE, 18th Batch
-BAIUST
+Department of Computer Science and Engineering, 18th Batch
+Bangladesh Army International University of Science and Technology
