@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Syne:wght@600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&family=Syne:wght@600;700;800&family=Instrument+Serif:ital@0;1&family=Playfair+Display:ital,wght@0,700;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 :root {
   --forest:  #0a3d1e;
@@ -34,15 +34,12 @@
   --r-xl:   22px;
   --r-pill: 100px;
 
-  --display: 'Syne', system-ui, sans-serif;
-  --serif:   'Instrument Serif', Georgia, serif;
-  --body:    'Inter', system-ui, sans-serif;
-  --mono:    'DM Mono', monospace;
-
-  --display: 'Syne', system-ui, sans-serif;
-  --serif:   'Playfair Display', Georgia, serif;
-  --body:    'Inter', system-ui, sans-serif;
-  --mono:    'DM Mono', monospace;
+  /* ── Font System ── */
+  --display: 'Playfair Display', Georgia, serif;  /* h1, h2, h3, section headings */
+  --ui:      'Syne', system-ui, sans-serif;       /* buttons, labels, navbar, tags */
+  --serif:   'Instrument Serif', Georgia, serif;  /* italic accents only */
+  --body:    'Inter', system-ui, sans-serif;      /* all body text, card content */
+  --mono:    'DM Mono', monospace;                /* course codes, technical labels */
 
   --sh-sm: 0 1px 4px rgba(0,0,0,0.06);
   --sh-md: 0 4px 20px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
@@ -60,7 +57,6 @@
   --fs-3xl:  36px;
 }
 
-/* Scale up on larger screens */
 @media (min-width: 480px) {
   :root {
     --px: 1.25rem;
@@ -132,13 +128,13 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
   padding: 0 var(--px);
 }
 
-/* Buttons — touch-friendly min height 44px */
+/* Buttons — Syne for UI labels */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 7px;
   min-height: 44px;
   padding: 10px 20px;
   border-radius: var(--r-pill);
-  font-family: var(--display);
+  font-family: var(--ui);
   font-size: var(--fs-sm);
   font-weight: 700;
   letter-spacing: 0.01em;
@@ -179,10 +175,10 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
   border-color: rgba(46,184,92,0.25);
 }
 
-/* Forms — touch friendly */
+/* Forms */
 .form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-label {
-  font-family: var(--display);
+  font-family: var(--ui);
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -229,12 +225,12 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
   80%      { transform: translateX(3px); }
 }
 
-/* Tags */
+/* Tags — Syne for UI labels */
 .tag {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 4px 10px;
   border-radius: var(--r-pill);
-  font-family: var(--display);
+  font-family: var(--ui);
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -254,10 +250,10 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
 }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
 
-/* Section helpers */
+/* Section helpers — Syne for UI labels */
 .sec-label {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--display);
+  font-family: var(--ui);
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -269,7 +265,7 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
 
 .sec-rule { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .sec-rule-label {
-  font-family: var(--display);
+  font-family: var(--ui);
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -280,7 +276,7 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
 .sec-rule::after { content: ''; flex: 1; height: 1.5px;
   background: linear-gradient(to right, var(--border2), transparent); }
 
-/* Illustration */
+
 .illus {
   width: 100%; border-radius: var(--r-xl);
   overflow: hidden; position: relative;
@@ -307,11 +303,11 @@ input, textarea, select { font-family: var(--body); font-size: var(--fs-base); }
   100% { box-shadow: 0 0 0 0 rgba(78,222,128,0); }
 }
 
-/* Responsive helpers */
+
 @media (max-width: 479px) { .hide-xs { display: none !important; } }
 @media (max-width: 639px) { .hide-sm { display: none !important; } }
 
-/* Tap targets */
+
 @media (max-width: 639px) {
   .btn { min-height: 48px; padding: 12px 18px; font-size: 14px; }
   .form-input { min-height: 52px; padding: 14px 15px; font-size: 16px; }
