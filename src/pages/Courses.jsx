@@ -30,8 +30,8 @@ export default function Courses() {
 
   return (
     <div style={{ maxWidth:"var(--max)", margin:"0 auto", padding:"1.5rem var(--px) 3rem" }}>
-      <Link to="/levels" style={{ fontFamily:"var(--display)", fontSize:"var(--fs-sm)",
-        fontWeight:700, color:"var(--leaf)", display:"inline-flex",
+      <Link to="/levels" style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)",
+        fontWeight:600, color:"var(--leaf)", display:"inline-flex",
         alignItems:"center", gap:5, marginBottom:20, textDecoration:"none" }}>
         <span className="ms sm">arrow_back</span> All Semesters
       </Link>
@@ -42,7 +42,7 @@ export default function Courses() {
         marginBottom:22, overflow:"hidden", position:"relative" }}>
         <div style={{ position:"absolute", right:-20, top:-20, width:120, height:120,
           borderRadius:"50%", background:"rgba(255,255,255,0.06)" }} />
-        <p style={{ fontFamily:"var(--display)", fontSize:"var(--fs-xs)", fontWeight:700,
+        <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)", fontWeight:600,
           color:"rgba(255,255,255,0.60)", letterSpacing:"0.12em",
           textTransform:"uppercase", marginBottom:8 }}>
           BAIUST CSE · {sem.ordinal} Semester
@@ -96,6 +96,7 @@ export default function Courses() {
                   e.currentTarget.style.boxShadow="var(--sh-sm)";
                   e.currentTarget.style.transform="";
                 }}>
+
                 {/* Icon */}
                 <div style={{ width:42, height:42, minWidth:42,
                   borderRadius:11, flexShrink:0,
@@ -104,32 +105,44 @@ export default function Courses() {
                   display:"flex", alignItems:"center", justifyContent:"center" }}>
                   <span className="ms" style={{ color: isLab ? "var(--ink3)" : "var(--leaf)", fontSize:20 }}>{icon}</span>
                 </div>
+
                 {/* Info */}
                 <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontFamily:"var(--display)", fontWeight:700,
-                    fontSize:"clamp(13px,3.5vw,15.5px)",
-                    color:"var(--ink)", marginBottom:3, lineHeight:1.3,
-                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
+                  <p style={{
+                    fontFamily:"var(--body)", fontWeight:600,
+                    fontSize:"clamp(14px,3.5vw,16px)",
+                    color:"var(--ink)", marginBottom:4, lineHeight:1.4,
+                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap",
+                  }}>
                     {course.title}
                   </p>
                   <div style={{ display:"flex", alignItems:"center", gap:8, flexWrap:"wrap" }}>
-                    <span style={{ fontFamily:"var(--mono)",
+                    <span style={{
+                      fontFamily:"var(--mono)",
                       fontSize:"clamp(10.5px,2.5vw,12px)",
                       color:"var(--leaf)", fontWeight:500,
-                      background:"var(--pale)", padding:"2px 8px",
-                      borderRadius:"var(--r-pill)" }}>{course.code}</span>
-                    <span style={{ fontFamily:"var(--body)",
-                      fontSize:"clamp(10.5px,2.5vw,12px)", color:"var(--ink3)" }}>
+                      background:"var(--pale)", padding:"2px 9px",
+                      borderRadius:"var(--r-pill)",
+                      letterSpacing:"0.04em",
+                    }}>{course.code}</span>
+                    <span style={{
+                      fontFamily:"var(--body)",
+                      fontSize:"clamp(10.5px,2.5vw,12px)",
+                      color:"var(--ink3)", fontWeight:400,
+                    }}>
                       {course.credit} Cr
                     </span>
                     {isLab && (
-                      <span style={{ fontFamily:"var(--display)", fontSize:"var(--fs-xs)",
+                      <span style={{
+                        fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
                         padding:"2px 8px", borderRadius:"var(--r-pill)",
                         background:"var(--bg2)", color:"var(--ink3)",
-                        border:"1px solid var(--border2)", fontWeight:600 }}>Lab</span>
+                        border:"1px solid var(--border2)", fontWeight:500,
+                      }}>Lab</span>
                     )}
                   </div>
                 </div>
+
                 <span className="ms sm" style={{ color:"var(--mint)", flexShrink:0 }}>chevron_right</span>
               </div>
             </Link>
