@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
 import { GhibliLibrary, GhibliStudy } from "../components/GhibliScene";
 
-const HERO   = "https://i.pinimg.com/1200x/23/d2/67/23d26715be8bb2fe7d7d99ea11225fe0.jpg";
-const COLLAB = "https://i.pinimg.com/1200x/40/5b/91/405b9141b1639a6e78d0c7e1a89742df.jpg";
+// const HERO   = "https://i.pinimg.com/1200x/23/d2/67/23d26715be8bb2fe7d7d99ea11225fe0.jpg";
+const HERO   = "7.jpeg";
+// const COLLAB = "https://i.pinimg.com/1200x/40/5b/91/405b9141b1639a6e78d0c7e1a89742df.jpg";
+
+const COLLAB = "5.jpeg";
 
 const features = [
   { icon:"menu_book",     color:"#0f5228", bg:"#e6f9ee",
