@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { SEMESTERS } from "../data/courses";
-import { GhibliLibrary } from "../components/GhibliScene";
 
 const SEM_COLORS = [
   "#0f5228","#1a7a3c","#2eb85c","#0a3d1e",
@@ -10,14 +9,14 @@ const SEM_COLORS = [
 export default function LevelTerm({ user }) {
   return (
     <div>
-      {/* Hero */}
+    
       <div style={{
         background:"linear-gradient(135deg,#c5e8d0 0%,#e8f9ee 100%)",
         padding:"2rem var(--px) 0",
         overflow:"hidden",
       }}>
         <div style={{ maxWidth:"var(--max)", margin:"0 auto" }}>
-          {/* Text block */}
+         
           <div style={{ paddingBottom:"1.5rem" }} className="fade-in">
             <div className="sec-label">BAIUST CSE · Academic Repository</div>
             <h1 style={{
@@ -49,10 +48,7 @@ export default function LevelTerm({ user }) {
             </div>
           </div>
 
-          {/* Illustration — hidden on very small screens to save space */}
-          <div className="hero-illus" style={{ display:"flex", justifyContent:"center" }}>
-            <GhibliLibrary style={{ maxWidth:380 }} />
-          </div>
+    
         </div>
       </div>
 
