@@ -17,9 +17,12 @@ export default function Login({ onLogin }) {
       setError("Please enter your email address and password."); return;
     }
     setError(""); setLoading(true);
-    try { await onLogin(form.email, form.password); navigate("/levels"); }
-    catch (err) { setError(err.response?.data?.message || "Incorrect email or password. Please try again."); }
-    finally { setLoading(false); }
+    try {
+      await onLogin(form.email, form.password, isAdmin);
+      navigate("/levels");
+    } catch (err) {
+      setError(err.response?.data?.message || "Incorrect email or password. Please try again.");
+    } finally { setLoading(false); }
   };
 
   return (
@@ -120,16 +123,16 @@ export default function Login({ onLogin }) {
               {loading ? "Signing in…" : "Sign In"}
             </button>
 
+            {/* Admin / Student switch button */}
             {!isAdmin ? (
               <Link to="/admin/login" style={{
                 display:"flex", alignItems:"center", justifyContent:"center", gap:7,
                 padding:"10px", borderRadius:"var(--r-md)",
                 border:"1px dashed rgba(212,160,23,0.40)",
                 background:"rgba(212,160,23,0.04)",
-                fontFamily:"var(--display)", fontSize:"var(--fs-xs)",
+                fontFamily:"var(--ui)", fontSize:"var(--fs-xs)",
                 fontWeight:600, color:"#92400e",
-                textDecoration:"none",
-                transition:"all 0.15s",
+                textDecoration:"none", transition:"all 0.15s",
               }}
                 onMouseEnter={e => { e.currentTarget.style.background="rgba(212,160,23,0.10)"; e.currentTarget.style.borderColor="rgba(212,160,23,0.60)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background="rgba(212,160,23,0.04)"; e.currentTarget.style.borderColor="rgba(212,160,23,0.40)"; }}
@@ -143,10 +146,9 @@ export default function Login({ onLogin }) {
                 padding:"10px", borderRadius:"var(--r-md)",
                 border:"1px dashed var(--border2)",
                 background:"var(--card2)",
-                fontFamily:"var(--display)", fontSize:"var(--fs-xs)",
+                fontFamily:"var(--ui)", fontSize:"var(--fs-xs)",
                 fontWeight:600, color:"var(--ink3)",
-                textDecoration:"none",
-                transition:"all 0.15s",
+                textDecoration:"none", transition:"all 0.15s",
               }}>
                 <span className="ms sm">arrow_back</span>
                 Back to Student Sign In
@@ -155,12 +157,14 @@ export default function Login({ onLogin }) {
           </div>
         </div>
 
-        <p style={{ marginTop:18, textAlign:"center",
-          fontFamily:"var(--body)", fontSize:"var(--fs-sm)", color:"var(--ink3)" }}>
-          Don't have an account?{" "}
-          <Link to="/register" style={{ color:"var(--leaf)", fontWeight:700,
-            fontFamily:"var(--display)" }}>Register here</Link>
-        </p>
+        {!isAdmin && (
+          <p style={{ marginTop:18, textAlign:"center",
+            fontFamily:"var(--body)", fontSize:"var(--fs-sm)", color:"var(--ink3)" }}>
+            Don't have an account?{" "}
+            <Link to="/register" style={{ color:"var(--leaf)", fontWeight:700,
+              fontFamily:"var(--ui)" }}>Register here</Link>
+          </p>
+        )}
       </div>
     </div>
   );

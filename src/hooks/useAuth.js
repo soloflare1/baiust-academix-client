@@ -18,8 +18,8 @@ export function useAuth() {
 
   useEffect(() => { fetchMe(); }, [fetchMe]);
 
-  const login = async (email, password) => {
-    const { data } = await api.post("/auth/login", { email, password });
+  const login = async (email, password, isAdminLogin = false) => {
+    const { data } = await api.post("/auth/login", { email, password, isAdminLogin });
     localStorage.setItem("token", data.token);
     setUser(data.user);
     return data;
@@ -27,8 +27,6 @@ export function useAuth() {
 
   const register = async (name, email, studentId, password) => {
     const { data } = await api.post("/auth/register", { name, email, studentId, password });
-    localStorage.setItem("token", data.token);
-    setUser(data.user);
     return data;
   };
 
@@ -39,3 +37,4 @@ export function useAuth() {
 
   return { user, loading, login, register, logout };
 }
+
