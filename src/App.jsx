@@ -49,7 +49,7 @@ export default function App() {
             <Route path="/levels"             element={<Private><LevelTerm    user={user} /></Private>} />
             <Route path="/semester/:semId"    element={<Private><Courses /></Private>} />
             <Route path="/course/:courseCode" element={<Private><CourseDetail user={user} /></Private>} />
-            <Route path="/upload"             element={<Private><Upload /></Private>} />
+            <Route path="/upload" element={<Private><Upload user={user} /></Private>} />
             <Route path="/search"             element={<Private><SearchPage /></Private>} />
             <Route path="/admin"              element={<Private><AdminPanel   user={user} /></Private>} />
             <Route path="*"                   element={<Navigate to={user ? "/levels" : "/"} replace />} />

@@ -10,7 +10,7 @@ const TYPES = [
   { value:"other", icon:"folder_open", label:"Other",     desc:"Assignment / PQ",     color:"#7c3aed", bg:"#f5f3ff" },
 ];
 
-export default function Upload() {
+export default function Upload({ user }) {
   const [params]  = useSearchParams();
   const navigate  = useNavigate();
   const [form, setForm] = useState({
@@ -20,9 +20,11 @@ export default function Upload() {
     course: params.get("course") || "",
     fileUrl:"",
   });
-  const [file, setFile]       = useState(null);
-  const [error, setError]     = useState("");
-  const [loading, setLoading] = useState(false);
+  const [file, setFile]         = useState(null);
+  const [error, setError]       = useState("");
+  const [loading, setLoading]   = useState(false);
+  const [success, setSuccess]   = useState(false);
+  const [approved, setApproved] = useState(false);
 
   const handle = (e) => setForm({ ...form, [e.target.name]: e.target.value });
   const sem     = SEMESTERS.find(s => s.id === form.semId);
@@ -40,12 +42,63 @@ export default function Upload() {
       const [level, term] = form.semId.split(".").map(Number);
       fd.append("level", level); fd.append("term", term);
       if (file) fd.append("file", file);
-      await api.post("/resources", fd, { headers:{ "Content-Type":"multipart/form-data" } });
-      navigate(`/course/${encodeURIComponent(form.course)}`);
+      const { data } = await api.post("/resources", fd, { headers:{ "Content-Type":"multipart/form-data" } });
+      const isApproved = data.data?.status === "approved";
+      setApproved(isApproved);
+      setSuccess(true);
     } catch (err) {
       setError(err.response?.data?.message || "Submission failed.");
     } finally { setLoading(false); }
   };
+
+  // Success screen
+  if (success) return (
+    <div style={{ maxWidth:640, margin:"0 auto", padding:"3rem var(--px)",
+      textAlign:"center" }} className="fade-in">
+      <div style={{ width:68, height:68, borderRadius:"50%",
+        background: approved
+          ? "linear-gradient(135deg,var(--mint),var(--glow))"
+          : "linear-gradient(135deg,#60a5fa,#3b82f6)",
+        display:"flex", alignItems:"center", justifyContent:"center",
+        margin:"0 auto 20px",
+        boxShadow: approved
+          ? "0 6px 20px rgba(46,184,92,0.28)"
+          : "0 6px 20px rgba(59,130,246,0.28)" }}>
+        <span className="ms xl fill" style={{ color:"#fff", fontSize:32 }}>
+          {approved ? "check_circle" : "schedule"}
+        </span>
+      </div>
+
+      <h2 style={{ fontFamily:"var(--display)", fontWeight:800,
+        fontSize:"var(--fs-xl)", color:"var(--ink)", marginBottom:12 }}>
+        {approved ? "Resource Published!" : "Resource Submitted"}
+      </h2>
+
+      <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-base)",
+        color:"var(--ink3)", lineHeight:1.75, fontWeight:300,
+        maxWidth:380, margin:"0 auto 28px" }}>
+        {approved
+          ? "Your resource has been published and is now visible to all students in the course library."
+          : "Your resource has been submitted for review. It will appear in the course library once approved by the administrator."}
+      </p>
+
+      <div style={{ display:"flex", gap:10, justifyContent:"center", flexWrap:"wrap" }}>
+        <button className="btn btn-primary"
+          onClick={() => navigate(`/course/${encodeURIComponent(form.course)}`)}>
+          <span className="ms sm">arrow_forward</span> Go to Course
+        </button>
+        <button className="btn btn-outline"
+          onClick={() => {
+            setSuccess(false);
+            setApproved(false);
+            setForm({ title:"", description:"", type:"note", semId:"", course:"", fileUrl:"" });
+            setFile(null);
+          }}>
+          Submit Another
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <div style={{ maxWidth:640, margin:"0 auto", padding:"1.5rem var(--px) 3rem" }}>
@@ -58,7 +111,10 @@ export default function Upload() {
         </h1>
         <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-base)",
           color:"var(--ink3)", fontWeight:300, lineHeight:1.7 }}>
-          Share materials with the community. All submissions are reviewed before publication.
+          Share materials with the community.{" "}
+          {user?.role === "admin"
+            ? "As an administrator, your submissions are published immediately."
+            : "All submissions are reviewed by an administrator before publication."}
         </p>
       </div>
 
@@ -78,8 +134,7 @@ export default function Upload() {
                     padding:"14px 10px", borderRadius:"var(--r-lg)", cursor:"pointer",
                     border:`2px solid ${form.type===t.value ? t.color : "var(--border)"}`,
                     background: form.type===t.value ? t.bg : "var(--card2)",
-                    textAlign:"center",
-                    transition:"all 0.18s",
+                    textAlign:"center", transition:"all 0.18s",
                     transform: form.type===t.value ? "scale(1.02)" : "scale(1)",
                   }}>
                   <span className="ms" style={{ color:form.type===t.value ? t.color : "var(--ink4)", fontSize:26 }}>{t.icon}</span>
@@ -165,8 +220,7 @@ export default function Upload() {
                 border:`2px dashed ${file ? at?.color : "var(--border2)"}`,
                 borderRadius:"var(--r-lg)",
                 background: file ? at?.bg : "var(--card2)",
-                transition:"all 0.18s",
-                minHeight:56,
+                transition:"all 0.18s", minHeight:56,
               }}>
                 <div style={{ width:38, height:38, borderRadius:9, flexShrink:0,
                   background: file ? `${at?.color}18` : "var(--bg2)",
@@ -216,3 +270,4 @@ export default function Upload() {
     </div>
   );
 }
+
