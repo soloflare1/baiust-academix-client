@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <div>
       {/* Hero */}
-      <div style={{ position:"relative", minHeight:"clamp(460px,85vw,640px)",
+      <div style={{ position:"relative", minHeight:"clamp(540px,100vw,700px)",
         overflow:"hidden", display:"flex", alignItems:"center" }}>
         <img src={HERO} alt="BAIUST Campus"
           style={{ position:"absolute", inset:0, width:"100%", height:"100%",
