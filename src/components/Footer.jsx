@@ -68,7 +68,7 @@ export default function Footer() {
           gap:8, alignItems:"center" }}>
           <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-xs)",
             color:"rgba(255,255,255,0.22)", fontWeight:300 }}>
-            © {new Date().getFullYear()} BAIUST Academix · CSE Department
+            © {new Date().getFullYear()} BAIUST Academix
           </p>
           <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)" }}>
             <span style={{ color:"rgba(255,255,255,0.28)" }}>Developed by </span>

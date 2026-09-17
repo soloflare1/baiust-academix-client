@@ -123,7 +123,7 @@ export default function Login({ onLogin }) {
               {loading ? "Signing in…" : "Sign In"}
             </button>
 
-            {/* Admin / Student switch button */}
+          
             {!isAdmin ? (
               <Link to="/admin/login" style={{
                 display:"flex", alignItems:"center", justifyContent:"center", gap:7,

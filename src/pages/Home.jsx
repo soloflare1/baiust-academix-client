@@ -4,7 +4,6 @@ import { GhibliLibrary, GhibliStudy } from "../components/GhibliScene";
 const HERO = "7.jpeg";
 const COLLAB = "5.jpeg";
 
-
 const catalog = [
   { code: "BK·01", title: "Course Textbooks & References",
     desc: "Curated textbooks, eBooks, and reference materials for every BAIUST CSE course, organised by level and term." },
@@ -29,7 +28,6 @@ const steps = [
     desc: "Download what your peers have shared, or upload your own notes to help the next student." },
 ];
 
-/* A restrained line-art seal — the one emblem the whole page is allowed. */
 function Crest({ className }) {
   return (
     <svg className={className} viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,22 +54,28 @@ export default function Home() {
         </div>
 
         <div className="ha-hero-inner ha-rise">
-          <Crest className="ha-crest" />
-          <p className="ha-tag">Department of Computer Science &amp; Engineering, BAIUST</p>
+          <div className="ha-hero-header">
+            <Crest className="ha-crest" />
+            <span className="ha-tag-badge">
+              <span className="ha-tag-dot"></span>
+              Department of Computer Science &amp; Engineering, BAIUST
+            </span>
+          </div>
 
           <h1 className="ha-hero-h disp">
-            The academic<br />archive of the department
+            Everything you need,
+            <br />
+            <span className="ha-gold-gradient">in one place</span>
           </h1>
 
           <p className="ha-hero-p">
-            A structured digital archive giving BAIUST CSE students verified access
-            to textbooks, lecture notes, and instructional videos — across the full
-            eight-semester curriculum.
+            Textbooks, lecture notes, and video lessons for every BAIUST CSE course
+            — organised, verified, and ready whenever you need them.
           </p>
 
           <div className="ha-hero-actions">
             <Link to="/register" className="ha-btn ha-btn-solid">
-              <span className="ms sm">arrow_forward</span> Create free account
+              Create free account <span className="ms sm">arrow_forward</span>
             </Link>
             <Link to="/login" className="ha-btn ha-btn-ghost">Sign in</Link>
           </div>
@@ -80,17 +84,16 @@ export default function Home() {
             <div><dt>8</dt><dd>Semesters</dd></div>
             <div><dt>60+</dt><dd>Courses</dd></div>
             <div><dt>3</dt><dd>Resource types</dd></div>
-            <div><dt>Free</dt><dd>No charges</dd></div>
+            <div><dt>100%</dt><dd>Free Access</dd></div>
           </dl>
         </div>
-
       </section>
 
       {/* ---------- About ---------- */}
       <section className="ha-section ha-about">
         <Crest className="ha-watermark" />
         <div className="ha-wrap ha-two-col">
-          <div>
+          <div className="ha-about-content">
             <p className="ha-label">§ 01 — About the platform</p>
             <Rule />
             <h2 className="disp ha-h2">
@@ -110,29 +113,36 @@ export default function Home() {
               Register for access
             </Link>
           </div>
-          <div className="ha-scene"><GhibliLibrary /></div>
+          <div className="ha-scene-card">
+            <GhibliLibrary />
+          </div>
         </div>
       </section>
 
       {/* ---------- Catalog / Features ---------- */}
       <section className="ha-section ha-catalog-section">
         <div className="ha-wrap">
-          <p className="ha-label">§ 02 — What's inside the archive</p>
-          <Rule />
-          <h2 className="disp ha-h2">Six kinds of material, one index</h2>
-          <p className="ha-p ha-intro">
-            Structured access to course material across every level and term
-            of the CSE programme, indexed the way a library would shelve it.
-          </p>
+          <div className="ha-catalog-header">
+            <div>
+              <p className="ha-label">§ 02 — What's inside the archive</p>
+              <Rule />
+              <h2 className="disp ha-h2">Six kinds of material, one index</h2>
+            </div>
+            <p className="ha-p ha-intro">
+              Structured access to course material across every level and term
+              of the CSE programme, indexed the way a library would shelve it.
+            </p>
+          </div>
 
-          <div className="ha-catalog">
+          <div className="ha-catalog-grid">
             {catalog.map((c) => (
-              <div className="ha-catalog-row" key={c.code}>
-                <span className="mono ha-catalog-code">{c.code}</span>
-                <div className="ha-catalog-body">
-                  <p className="disp ha-catalog-title">{c.title}</p>
-                  <p className="ha-catalog-desc">{c.desc}</p>
+              <div className="ha-catalog-card" key={c.code}>
+                <div className="ha-catalog-card-header">
+                  <span className="mono ha-catalog-code">{c.code}</span>
+                  <div className="ha-card-icon-dot"></div>
                 </div>
+                <h3 className="disp ha-catalog-title">{c.title}</h3>
+                <p className="ha-catalog-desc">{c.desc}</p>
               </div>
             ))}
           </div>
@@ -149,19 +159,23 @@ export default function Home() {
 
             <ol className="ha-steps">
               {steps.map((s) => (
-                <li key={s.n}>
+                <li key={s.n} className="ha-step-item">
                   <span className="mono ha-step-n">{s.n}</span>
                   <div>
-                    <p className="ha-step-title">{s.title}</p>
+                    <h4 className="ha-step-title">{s.title}</h4>
                     <p className="ha-step-desc">{s.desc}</p>
                   </div>
                 </li>
               ))}
             </ol>
 
-            <Link to="/register" className="ha-btn ha-btn-solid">Get started</Link>
+            <Link to="/register" className="ha-btn ha-btn-solid">
+              Get started now <span className="ms sm">arrow_forward</span>
+            </Link>
           </div>
-          <div className="ha-scene"><GhibliStudy /></div>
+          <div className="ha-scene-card">
+            <GhibliStudy />
+          </div>
         </div>
       </section>
 
@@ -176,172 +190,266 @@ export default function Home() {
             Registration is free and open to every enrolled student of the
             Department of Computer Science and Engineering, BAIUST.
           </p>
-          <Link to="/register" className="ha-btn ha-btn-solid">Register now — free</Link>
+          <Link to="/register" className="ha-btn ha-btn-gold">
+            Register now — free
+          </Link>
         </div>
       </section>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
         .ha-home {
-          --ink: #101F16;
-          --ink-soft: #4C5D52;
-          --ink-faint: #8A968B;
-          --forest: #0D3D22;
-          --forest-deep: #06180E;
-          --brass: #A3812E;
-          --brass-deep: #7C6222;
-          --brass-light: #DCC488;
-          --paper: #F7F2E6;
-          --paper-deep: #EEE4CC;
+          --ink: #0E1A13;
+          --ink-soft: #44544A;
+          --ink-faint: #78877C;
+          --forest: #0B331D;
+          --forest-deep: #05140B;
+          --brass: #B38E36;
+          --brass-deep: #80631F;
+          --brass-light: #E8D4A2;
+          --paper: #FAF7F0;
+          --paper-deep: #EBE1C8;
           --white: #FFFFFF;
-          --line: rgba(16,31,22,0.15);
-          --line-soft: rgba(16,31,22,0.08);
-          --line-gold: rgba(163,129,46,0.4);
+          --line: rgba(14,26,19,0.12);
+          --line-soft: rgba(14,26,19,0.06);
+          --line-gold: rgba(179,142,54,0.35);
+          --shadow-sm: 0 4px 20px rgba(0,0,0,0.04);
+          --shadow-md: 0 12px 32px rgba(11,51,29,0.08);
           font-family: 'Inter', sans-serif;
           color: var(--ink);
           background: var(--white);
+          -webkit-font-smoothing: antialiased;
         }
         .ha-home .disp { font-family: 'Fraunces', serif; }
         .ha-home .mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.02em; }
 
-        .ha-wrap { max-width: 1160px; margin: 0 auto; padding: 0 28px; position: relative; }
-        .ha-section { padding: clamp(4rem, 9vw, 7.5rem) 0; position: relative; }
+        .ha-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; }
+        .ha-section { padding: clamp(4.5rem, 10vw, 8rem) 0; position: relative; }
         .ha-label {
           font-family: 'IBM Plex Mono', monospace;
-          font-size: 12px; letter-spacing: 0.03em;
+          font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.1em;
           color: var(--brass-deep);
-          margin-bottom: 18px;
+          font-weight: 600;
+          margin-bottom: 14px;
         }
         .ha-rule { display: flex; align-items: center; width: 74px; margin-bottom: 28px; }
         .ha-rule::before, .ha-rule::after { content: ""; flex: 1; height: 1px; background: var(--line-gold); }
         .ha-rule span { width: 5px; height: 5px; margin: 0 9px; background: var(--brass);
           transform: rotate(45deg); flex-shrink: 0; }
+        
         .ha-h2 {
           font-weight: 600;
-          font-size: clamp(26px, 4.4vw, 40px);
-          line-height: 1.16;
-          letter-spacing: -0.4px;
+          font-size: clamp(28px, 4.5vw, 42px);
+          line-height: 1.15;
+          letter-spacing: -0.5px;
           color: var(--ink);
           margin-bottom: 20px;
-          max-width: 19ch;
         }
         .ha-p {
           font-size: 16.5px;
-          line-height: 1.85;
+          line-height: 1.8;
           color: var(--ink-soft);
           font-weight: 300;
-          max-width: 46ch;
           margin-bottom: 16px;
         }
-        .ha-p-soft { color: var(--ink-faint); margin-bottom: 32px; }
-        .ha-intro { max-width: 56ch; margin-bottom: 42px; }
+        .ha-p-soft { color: var(--ink-faint); margin-bottom: 36px; }
 
         /* Buttons */
         .ha-btn {
-          display: inline-flex; align-items: center; gap: 9px; justify-content: center;
-          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14.5px;
-          letter-spacing: 0.01em;
-          padding: 13px 24px; border-radius: 3px; min-height: 46px;
+          display: inline-flex; align-items: center; gap: 10px; justify-content: center;
+          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px;
+          letter-spacing: 0.02em;
+          padding: 14px 28px; border-radius: 6px; min-height: 48px;
           text-decoration: none; border: 1.5px solid transparent;
-          transition: background-color .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: pointer;
         }
-        .ha-btn-solid { background: var(--forest); color: var(--paper-deep);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.12); }
-        .ha-btn-solid:hover { background: var(--forest-deep); }
-        .ha-btn-ghost { border-color: rgba(255,255,255,0.38); color: var(--white); position: relative; }
-        .ha-btn-ghost:hover { border-color: var(--brass-light); color: var(--brass-light); }
-        .ha-btn-outline { border-color: var(--forest); color: var(--forest); }
-        .ha-btn-outline:hover { background: var(--forest); color: var(--paper-deep); }
+        .ha-btn-solid { 
+          background: var(--forest); color: var(--paper-deep);
+          box-shadow: 0 4px 14px rgba(11,51,29,0.25);
+        }
+        .ha-btn-solid:hover { 
+          background: var(--forest-deep); 
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(11,51,29,0.35);
+        }
+        .ha-btn-ghost { 
+          border-color: rgba(255,255,255,0.25); 
+          color: var(--white); 
+          backdrop-filter: blur(8px);
+          background: rgba(255,255,255,0.05);
+        }
+        .ha-btn-ghost:hover { 
+          border-color: var(--brass-light); 
+          color: var(--brass-light);
+          background: rgba(255,255,255,0.1);
+        }
+        .ha-btn-outline { 
+          border-color: var(--forest); 
+          color: var(--forest); 
+          background: transparent;
+        }
+        .ha-btn-outline:hover { 
+          background: var(--forest); 
+          color: var(--paper-deep);
+          transform: translateY(-2px);
+        }
+        .ha-btn-gold {
+          background: var(--brass);
+          color: var(--forest-deep);
+          font-weight: 700;
+        }
+        .ha-btn-gold:hover {
+          background: var(--brass-light);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(179,142,54,0.3);
+        }
 
-        /* Film-grain texture, used sparingly on the two dark photo bands */
         .ha-grain::after {
-          content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: overlay; opacity: 0.5;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+          content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: overlay; opacity: 0.4;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
         }
 
-        /* Crest / seal */
-        .ha-crest { width: 40px; height: 40px; color: var(--brass-light); margin-bottom: 22px; }
-        .ha-crest-cta { color: var(--brass-light); margin: 0 auto 18px; }
-        .ha-watermark { position: absolute; top: -30px; right: -20px; width: 320px; height: 320px;
-          color: var(--ink); opacity: 0.035; pointer-events: none; display: none; }
+        .ha-crest { width: 44px; height: 44px; color: var(--brass-light); }
+        .ha-crest-cta { color: var(--brass-light); margin: 0 auto 20px; }
+        .ha-watermark { position: absolute; top: -40px; right: -40px; width: 420px; height: 420px;
+          color: var(--ink); opacity: 0.025; pointer-events: none; display: none; }
 
-        /* Hero */
-        .ha-hero { position: relative; min-height: clamp(600px, 94vh, 760px);
+        /* Hero Section */
+        .ha-hero { position: relative; min-height: clamp(640px, 92vh, 820px);
           display: flex; align-items: flex-end; overflow: hidden; }
         .ha-hero-media { position: absolute; inset: 0; }
         .ha-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
         .ha-hero-scrim { position: absolute; inset: 0;
-          background: linear-gradient(190deg, rgba(6,24,14,0.98) 10%, rgba(6,24,14,0.78) 48%, rgba(6,24,14,0.32) 100%); }
-        .ha-hero-inner { position: relative; z-index: 1; max-width: 1160px; margin: 0 auto;
-          padding: clamp(2.5rem, 7vw, 5rem) 28px clamp(3.5rem, 9vw, 6rem); width: 100%; }
-        .ha-tag { font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.03em;
-          color: var(--brass-light); margin-bottom: 26px; }
+          background: linear-gradient(180deg, rgba(5,20,11,0.92) 0%, rgba(5,20,11,0.82) 50%, rgba(5,20,11,0.6) 100%); }
+        .ha-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;
+          padding: clamp(3rem, 8vw, 6rem) 32px clamp(3.5rem, 8vw, 5.5rem); width: 100%; }
+        
+        .ha-hero-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+        .ha-tag-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.02em;
+          color: var(--brass-light); background: rgba(232,212,162,0.1);
+          padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(232,212,162,0.2);
+          backdrop-filter: blur(4px);
+        }
+        .ha-tag-dot { width: 6px; height: 6px; background: var(--brass); border-radius: 50%; display: inline-block; }
+        
         .ha-hero-h { color: var(--white); font-weight: 500;
-          font-size: clamp(32px, 6.6vw, 56px); line-height: 1.1; letter-spacing: -0.7px;
-          max-width: 14ch; margin-bottom: 24px; }
-        .ha-hero-p { color: rgba(255,255,255,0.7); font-size: clamp(15px, 3vw, 17px);
-          line-height: 1.85; font-weight: 300; max-width: 44ch; margin-bottom: 36px; }
-        .ha-hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
-        .ha-ledger { display: flex; gap: 0; flex-wrap: wrap; border-top: 1px solid rgba(220,196,136,0.22); padding-top: 26px; }
-        .ha-ledger > div { padding-right: clamp(22px, 4vw, 44px); margin-right: clamp(22px, 4vw, 44px);
-          border-right: 1px solid rgba(255,255,255,0.14); }
-        .ha-ledger > div:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+          font-size: clamp(36px, 6.5vw, 62px); line-height: 1.08; letter-spacing: -1px;
+          max-width: 15ch; margin-bottom: 24px; }
+        .ha-gold-gradient {
+          background: linear-gradient(135deg, #FFFFFF 30%, var(--brass-light) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .ha-hero-p { color: rgba(255,255,255,0.78); font-size: clamp(16px, 2.5vw, 18px);
+          line-height: 1.8; font-weight: 300; max-width: 48ch; margin-bottom: 40px; }
+        .ha-hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+        
+        /* Glassmorphic Ledger */
+        .ha-ledger { 
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(12px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          padding: 24px 32px; border-radius: 12px;
+          max-width: 720px;
+        }
+        @media (min-width: 600px) {
+          .ha-ledger { grid-template-columns: repeat(4, 1fr); }
+        }
         .ha-ledger dt { font-family: 'Fraunces', serif; font-weight: 500; color: var(--white);
-          font-size: clamp(21px, 4vw, 27px); line-height: 1; margin-bottom: 6px; }
-        .ha-ledger dd { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 0.04em;
-          color: rgba(220,196,136,0.75); margin: 0; }
+          font-size: clamp(24px, 3.5vw, 32px); line-height: 1; margin-bottom: 6px; }
+        .ha-ledger dd { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.05em;
+          color: var(--brass-light); margin: 0; text-transform: uppercase; }
 
-/* About / How-it-works shared grid */
-        .ha-two-col { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+        /* Shared 2-Col Grid */
+        .ha-two-col { display: grid; grid-template-columns: 1fr; gap: 56px; align-items: center; }
         .ha-about { background: var(--paper); overflow: hidden; }
-        .ha-scene { display: flex; justify-content: center; }
-
-        /* Catalog list */
-        .ha-catalog-section { background: var(--white); }
-        .ha-catalog { border-top: 1px solid var(--line); margin-top: 4px; }
-        .ha-catalog-row { display: grid; grid-template-columns: 68px 1fr; gap: 20px;
-          padding: 24px 0; border-bottom: 1px solid var(--line-soft); align-items: baseline;
-          transition: background-color .2s ease; }
-        .ha-catalog-row:hover { background: rgba(163,129,46,0.045); }
-        .ha-catalog-code { font-size: 13px; color: var(--brass); padding-top: 4px; }
-        .ha-catalog-title { font-weight: 500; font-size: 19px; color: var(--ink); margin-bottom: 5px; }
-        .ha-catalog-desc { font-size: 14.5px; line-height: 1.75; color: var(--ink-soft); font-weight: 300; max-width: 58ch; }
-
-        /* Steps */
-        .ha-how { background: var(--paper); }
-        .ha-steps { list-style: none; margin: 0 0 34px; padding: 0; }
-        .ha-steps li { display: grid; grid-template-columns: 32px 1fr; gap: 16px; margin-bottom: 26px; }
-        .ha-step-n { font-size: 13px; color: var(--brass); padding-top: 3px; }
-        .ha-step-title { font-weight: 600; font-size: 16px; color: var(--ink); margin-bottom: 5px; }
-        .ha-step-desc { font-size: 14px; line-height: 1.75; color: var(--ink-soft); font-weight: 300; }
-
-        /* CTA band */
-        .ha-cta { position: relative; min-height: clamp(280px, 38vw, 360px);
-          display: flex; align-items: center; overflow: hidden; }
-        .ha-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-        .ha-cta-scrim { position: absolute; inset: 0; background: rgba(6,20,12,0.9); }
-        .ha-cta-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto;
-          padding: clamp(2.5rem, 6vw, 3.5rem) 28px; text-align: center; }
-        .ha-cta-inner h2 { color: var(--white); font-weight: 500; font-size: clamp(23px, 4.5vw, 34px);
-          line-height: 1.22; margin-bottom: 14px; }
-        .ha-cta-inner p { color: rgba(255,255,255,0.62); font-size: 15px; line-height: 1.8;
-          font-weight: 300; margin-bottom: 30px; }
-        .ha-cta-inner .ha-btn { display: inline-flex; }
-
-        /* Entrance motion — one orchestrated moment on the hero only */
-        .ha-rise { animation: haRise 0.85s cubic-bezier(.2,.7,.2,1) both; }
-        @keyframes haRise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-        @media (prefers-reduced-motion: reduce) { .ha-rise { animation: none; } }
-
-        /* Tablet+ */
-        @media (min-width: 720px) {
-          .ha-two-col { grid-template-columns: 1fr 1fr; }
+        .ha-scene-card { 
+          display: flex; justify-content: center; 
+          background: var(--white); padding: 24px; border-radius: 16px;
+          box-shadow: var(--shadow-md); border: 1px solid var(--line-soft);
         }
 
-        /* Desktop — reveal the watermark and widen catalog rows */
-        @media (min-width: 900px) {
-          .ha-catalog-row { grid-template-columns: 96px 1fr; }
+        /* Modern Catalog Grid */
+        .ha-catalog-section { background: var(--white); }
+        .ha-catalog-header { margin-bottom: 48px; }
+        .ha-intro { max-width: 52ch; font-size: 17px; }
+        
+        .ha-catalog-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 24px;
+        }
+        .ha-catalog-card {
+          background: var(--paper);
+          border: 1px solid var(--line);
+          border-radius: 12px;
+          padding: 32px 28px;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          overflow: hidden;
+        }
+        .ha-catalog-card::before {
+          content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+          background: var(--brass); opacity: 0; transition: opacity 0.3s ease;
+        }
+        .ha-catalog-card:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-md);
+          background: var(--white);
+          border-color: rgba(179,142,54,0.3);
+        }
+        .ha-catalog-card:hover::before { opacity: 1; }
+        .ha-catalog-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .ha-catalog-code { font-size: 13px; font-weight: 600; color: var(--brass-deep); background: rgba(179,142,54,0.12); padding: 4px 10px; border-radius: 4px; }
+        .ha-card-icon-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-gold); }
+        .ha-catalog-title { font-weight: 600; font-size: 20px; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
+        .ha-catalog-desc { font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); font-weight: 300; }
+
+        /* Modern Steps Section */
+        .ha-how { background: var(--paper); }
+        .ha-steps { list-style: none; margin: 0 0 40px; padding: 0; display: flex; flex-direction: column; gap: 24px; }
+        .ha-step-item { 
+          display: flex; gap: 20px; align-items: flex-start; 
+          background: var(--white); padding: 20px 24px; border-radius: 10px;
+          border: 1px solid var(--line-soft); box-shadow: var(--shadow-sm);
+        }
+        .ha-step-n { 
+          font-size: 14px; font-weight: 600; color: var(--forest); 
+          background: var(--paper-deep); width: 36px; height: 36px;
+          display: flex; align-items: center; justify-content: center;
+          border-radius: 50%; flex-shrink: 0;
+        }
+        .ha-step-title { font-weight: 600; font-size: 17px; color: var(--ink); margin-bottom: 4px; }
+        .ha-step-desc { font-size: 14px; line-height: 1.65; color: var(--ink-soft); font-weight: 300; }
+
+        /* CTA Band */
+        .ha-cta { position: relative; min-height: clamp(320px, 40vw, 420px);
+          display: flex; align-items: center; overflow: hidden; }
+        .ha-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .ha-cta-scrim { position: absolute; inset: 0; background: rgba(5,20,11,0.92); }
+        .ha-cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto;
+          padding: clamp(3rem, 6vw, 4.5rem) 32px; text-align: center; }
+        .ha-cta-inner h2 { color: var(--white); font-weight: 500; font-size: clamp(26px, 4.5vw, 38px);
+          line-height: 1.2; margin-bottom: 16px; }
+        .ha-cta-inner p { color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8;
+          font-weight: 300; margin-bottom: 36px; }
+
+        /* Entrance Motion */
+        .ha-rise { animation: haRise 0.85s cubic-bezier(.16,1,.3,1) both; }
+        @keyframes haRise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @media (prefers-reduced-motion: reduce) { .ha-rise { animation: none; } }
+
+        /* Responsive Breakpoints */
+        @media (min-width: 860px) {
+          .ha-two-col { grid-template-columns: 1fr 1fr; }
+          .ha-catalog-header { display: flex; justify-content: space-between; align-items: flex-end; }
+        }
+        @media (min-width: 1024px) {
           .ha-watermark { display: block; }
         }
       `}</style>
