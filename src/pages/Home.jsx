@@ -239,7 +239,7 @@ export default function Home() {
         .ha-rule::before, .ha-rule::after { content: ""; flex: 1; height: 1px; background: var(--line-gold); }
         .ha-rule span { width: 5px; height: 5px; margin: 0 8px; background: var(--brass);
           transform: rotate(45deg); flex-shrink: 0; }
-        
+
         .ha-h2 {
           font-weight: 600;
           font-size: clamp(24px, 4vw, 42px);
@@ -270,33 +270,33 @@ export default function Home() {
         @media (min-width: 768px) {
           .ha-btn { padding: 14px 28px; font-size: 14px; min-height: 48px; }
         }
-        .ha-btn-solid { 
+        .ha-btn-solid {
           background: var(--forest); color: var(--paper-deep);
           box-shadow: 0 4px 14px rgba(11,51,29,0.25);
         }
-        .ha-btn-solid:hover { 
-          background: var(--forest-deep); 
+        .ha-btn-solid:hover {
+          background: var(--forest-deep);
           transform: translateY(-2px);
           box-shadow: 0 6px 20px rgba(11,51,29,0.35);
         }
-        .ha-btn-ghost { 
-          border-color: rgba(255,255,255,0.25); 
-          color: var(--white); 
+        .ha-btn-ghost {
+          border-color: rgba(255,255,255,0.25);
+          color: var(--white);
           backdrop-filter: blur(8px);
           background: rgba(255,255,255,0.05);
         }
-        .ha-btn-ghost:hover { 
-          border-color: var(--brass-light); 
+        .ha-btn-ghost:hover {
+          border-color: var(--brass-light);
           color: var(--brass-light);
           background: rgba(255,255,255,0.1);
         }
-        .ha-btn-outline { 
-          border-color: var(--forest); 
-          color: var(--forest); 
+        .ha-btn-outline {
+          border-color: var(--forest);
+          color: var(--forest);
           background: transparent;
         }
-        .ha-btn-outline:hover { 
-          background: var(--forest); 
+        .ha-btn-outline:hover {
+          background: var(--forest);
           color: var(--paper-deep);
           transform: translateY(-2px);
         }
@@ -320,84 +320,89 @@ export default function Home() {
         .ha-watermark { position: absolute; top: -40px; right: -40px; width: 420px; height: 420px;
           color: var(--ink); opacity: 0.025; pointer-events: none; display: none; }
 
-        /* Hero Section - Fixed Mobile Alignment & Layout */
-        .ha-hero { 
-          position: relative; 
-          min-height: 100vh;
-          display: flex; 
-          align-items: flex-end; 
-          overflow: hidden; 
+        /* ---------- Hero (image-focused fixes) ---------- */
+        .ha-hero {
+          position: relative;
+          min-height: clamp(560px, 82vh, 820px);
+          display: flex;
+          align-items: center;
+          overflow: hidden;
         }
         .ha-hero-media { position: absolute; inset: 0; }
-        .ha-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
-        .ha-hero-scrim { 
-          position: absolute; inset: 0;
-          background: linear-gradient(180deg, rgba(5,20,11,0.94) 0%, rgba(5,20,11,0.86) 50%, rgba(5,20,11,0.72) 100%); 
+        .ha-hero-media img {
+          width: 100%; height: 100%;
+          object-fit: cover;
+          object-position: center 55%;
         }
-        .ha-hero-inner { 
-          position: relative; z-index: 1; max-width: 1200px; margin: 0 0;
-          padding: 1.5rem 20px 3rem; width: 100%; 
+        .ha-hero-scrim {
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(5,20,11,0.55) 0%, rgba(5,20,11,0.62) 45%, rgba(5,20,11,0.80) 100%);
+        }
+        .ha-hero-inner {
+          position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;
+          padding: 2.5rem 20px; width: 100%;
         }
         @media (min-width: 768px) {
-          .ha-hero-inner { padding: 6rem 32px 4.5rem; }
+          .ha-hero-inner { padding: 4rem 32px; }
         }
-        
-        /* Fixed Header Flex Container */
-        .ha-hero-header { 
-          display: flex; 
-          align-items: center; 
-          gap: 10px; 
-          margin-bottom: 16px; 
-          flex-wrap: nowrap; 
+
+        .ha-hero-header {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 16px;
+          flex-wrap: nowrap;
         }
-        .ha-crest { 
-          width: 30px; 
-          height: 30px; 
-          color: var(--brass-light); 
-          flex-shrink: 0; 
+        .ha-crest {
+          width: 30px;
+          height: 30px;
+          color: var(--brass-light);
+          flex-shrink: 0;
         }
-        @media (min-width: 768px) { 
-          .ha-crest { width: 44px; height: 44px; } 
+        @media (min-width: 768px) {
+          .ha-crest { width: 44px; height: 44px; }
         }
 
         .ha-tag-badge {
-          display: inline-flex; 
-          align-items: center; 
+          display: inline-flex;
+          align-items: center;
           gap: 6px;
-          font-family: 'IBM Plex Mono', monospace; 
-          font-size: 10px; 
+          font-family: 'IBM Plex Mono', monospace;
+          font-size: 10px;
           letter-spacing: 0.02em;
-          color: var(--brass-light); 
+          color: var(--brass-light);
           background: rgba(232,212,162,0.1);
-          padding: 4px 10px; 
-          border-radius: 100px; 
+          padding: 4px 10px;
+          border-radius: 100px;
           border: 1px solid rgba(232,212,162,0.2);
           backdrop-filter: blur(4px);
-          white-space: normal; 
+          white-space: normal;
         }
-        @media (min-width: 768px) { 
-          .ha-tag-badge { font-size: 12px; padding: 6px 14px; } 
+        @media (min-width: 768px) {
+          .ha-tag-badge { font-size: 12px; padding: 6px 14px; }
         }
         .ha-tag-dot { width: 5px; height: 5px; background: var(--brass); border-radius: 50%; display: inline-block; flex-shrink: 0; }
-        
+
         .ha-hero-h { color: var(--white); font-weight: 500;
           font-size: clamp(32px, 7vw, 62px); line-height: 1.1; letter-spacing: -1px;
-          max-width: 15ch; margin-bottom: 16px; }
+          max-width: 15ch; margin-bottom: 16px;
+          text-shadow: 0 2px 20px rgba(5,20,11,0.5); }
         .ha-gold-gradient {
           background: linear-gradient(135deg, #FFFFFF 30%, var(--brass-light) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .ha-hero-p { color: rgba(255,255,255,0.78); font-size: clamp(15px, 2.5vw, 18px);
-          line-height: 1.7; font-weight: 300; max-width: 48ch; margin-bottom: 28px; }
+        .ha-hero-p { color: rgba(255,255,255,0.82); font-size: clamp(15px, 2.5vw, 18px);
+          line-height: 1.7; font-weight: 300; max-width: 48ch; margin-bottom: 28px;
+          text-shadow: 0 1px 12px rgba(5,20,11,0.55); }
         .ha-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
-        
+
         /* Glassmorphic Ledger */
-        .ha-ledger { 
+        .ha-ledger {
           display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
-          background: rgba(255, 255, 255, 0.05);
+          background: rgba(5, 20, 11, 0.32);
           backdrop-filter: blur(12px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.12);
           padding: 16px 20px; border-radius: 10px;
           max-width: 720px;
         }
@@ -413,8 +418,8 @@ export default function Home() {
         /* Shared 2-Col Grid */
         .ha-two-col { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
         .ha-about { background: var(--paper); overflow: hidden; }
-        .ha-scene-card { 
-          display: flex; justify-content: center; 
+        .ha-scene-card {
+          display: flex; justify-content: center;
           background: var(--white); padding: 16px; border-radius: 14px;
           box-shadow: var(--shadow-md); border: 1px solid var(--line-soft);
         }
@@ -424,7 +429,7 @@ export default function Home() {
         .ha-catalog-section { background: var(--white); }
         .ha-catalog-header { margin-bottom: 36px; }
         .ha-intro { max-width: 52ch; font-size: 16px; }
-        
+
         .ha-catalog-grid {
           display: grid;
           grid-template-columns: 1fr;
@@ -466,14 +471,14 @@ export default function Home() {
         /* Modern Steps Section */
         .ha-how { background: var(--paper); }
         .ha-steps { list-style: none; margin: 0 0 32px; padding: 0; display: flex; flex-direction: column; gap: 16px; }
-        .ha-step-item { 
-          display: flex; gap: 16px; align-items: flex-start; 
+        .ha-step-item {
+          display: flex; gap: 16px; align-items: flex-start;
           background: var(--white); padding: 16px 18px; border-radius: 10px;
           border: 1px solid var(--line-soft); box-shadow: var(--shadow-sm);
         }
         @media (min-width: 768px) { .ha-step-item { padding: 20px 24px; gap: 20px; } }
-        .ha-step-n { 
-          font-size: 13px; font-weight: 600; color: var(--forest); 
+        .ha-step-n {
+          font-size: 13px; font-weight: 600; color: var(--forest);
           background: var(--paper-deep); width: 32px; height: 32px;
           display: flex; align-items: center; justify-content: center;
           border-radius: 50%; flex-shrink: 0;
@@ -485,20 +490,26 @@ export default function Home() {
         /* CTA Band */
         .ha-cta { position: relative; min-height: 320px;
           display: flex; align-items: center; overflow: hidden; }
-        .ha-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-        .ha-cta-scrim { position: absolute; inset: 0; background: rgba(5,20,11,0.92); }
+        .ha-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 50%; }
+        .ha-cta-scrim { position: absolute; inset: 0; background: rgba(5,20,11,0.82); }
         .ha-cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto;
           padding: 3.5rem 20px; text-align: center; }
         @media (min-width: 768px) { .ha-cta-inner { padding: 4.5rem 32px; } }
         .ha-cta-inner h2 { color: var(--white); font-weight: 500; font-size: clamp(24px, 4.5vw, 38px);
           line-height: 1.2; margin-bottom: 14px; }
-        .ha-cta-inner p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.7;
+        .ha-cta-inner p { color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.7;
           font-weight: 300; margin-bottom: 28px; }
 
         /* Entrance Motion */
         .ha-rise { animation: haRise 0.85s cubic-bezier(.16,1,.3,1) both; }
         @keyframes haRise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
         @media (prefers-reduced-motion: reduce) { .ha-rise { animation: none; } }
+
+        /* Small phones — keep the building visible, avoid a tall empty sky */
+        @media (max-width: 640px) {
+          .ha-hero { min-height: 78vh; }
+          .ha-hero-media img { object-position: center 60%; }
+        }
 
         /* Responsive Breakpoints */
         @media (min-width: 860px) {
