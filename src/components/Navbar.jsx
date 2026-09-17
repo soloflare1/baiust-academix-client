@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 
 export default function Navbar({ user, onLogout }) {
-  const [open, setOpen]       = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -21,9 +21,9 @@ export default function Navbar({ user, onLogout }) {
   const handleLogout = () => { onLogout(); navigate("/login"); };
 
   const links = user ? [
-    { to:"/levels", icon:"grid_view",            label:"Levels"  },
-    { to:"/upload", icon:"upload_file",           label:"Upload"  },
-    { to:"/search", icon:"search",                label:"Search"  },
+    { to:"/levels", icon:"grid_view", label:"Levels" },
+    { to:"/upload", icon:"upload_file", label:"Upload" },
+    { to:"/search", icon:"search", label:"Search" },
     ...(user.role==="admin"
       ? [{ to:"/admin", icon:"admin_panel_settings", label:"Admin" }]
       : []),
@@ -94,21 +94,17 @@ export default function Navbar({ user, onLogout }) {
               </button>
             </div>
           ) : (
-            <div style={{ display:"flex", gap:8, marginLeft:8 }}>
-              <Link to="/login" style={{
-                display:"inline-flex", alignItems:"center",
-                height:36, padding:"0 16px", borderRadius:"var(--r-pill)",
-                border:"1.5px solid rgba(255,255,255,0.28)",
-                fontFamily:"var(--display)", fontSize:13, fontWeight:700,
-                color:"rgba(255,255,255,0.88)", textDecoration:"none",
-              }}>Sign In</Link>
-              <Link to="/register" style={{
-                display:"inline-flex", alignItems:"center",
-                height:36, padding:"0 16px", borderRadius:"var(--r-pill)",
-                background:"#fff", color:"var(--pine)",
-                fontFamily:"var(--display)", fontSize:13, fontWeight:800,
-                textDecoration:"none",
-              }}>Get Started</Link>
+            <div style={{ display:"flex", alignItems:"center", gap:10, marginLeft:8 }}>
+              {/* Desktop Sign In Button */}
+              <Link to="/login" className="btn-signin">
+                Sign In
+              </Link>
+              
+              {/* Desktop Get Started Button */}
+              <Link to="/register" className="btn-get-started">
+                <span className="ms sm rocket-icon">rocket_launch</span>
+                <span>Get Started</span>
+              </Link>
             </div>
           )}
         </div>
@@ -191,20 +187,112 @@ export default function Navbar({ user, onLogout }) {
             </>
           ) : (
             <div style={{ display:"flex", flexDirection:"column", gap:12, marginTop:8 }}>
-              <Link to="/login" className="btn btn-outline"
-                style={{ width:"100%", justifyContent:"center", fontSize:16 }}>
+              {/* Mobile Sign In */}
+              <Link to="/login" className="mobile-btn-signin">
                 Sign In
               </Link>
-              <Link to="/register" className="btn btn-primary"
-                style={{ width:"100%", justifyContent:"center", fontSize:16 }}>
-                Get Started Free
+
+              {/* Mobile Get Started */}
+              <Link to="/register" className="btn-get-started" style={{ width: "100%", height: "44px", fontSize: "15px" }}>
+                <span className="ms sm rocket-icon">rocket_launch</span>
+                <span>Get Started Free</span>
               </Link>
             </div>
           )}
         </div>
       )}
 
+      {/* CSS Styles */}
       <style>{`
+        /* Desktop Sign In Button */
+        .btn-signin {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          height: 36px;
+          padding: 0 16px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          font-family: var(--display);
+          font-size: 13px;
+          font-weight: 600;
+          color: #e2e8f0;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .btn-signin:hover {
+          background: rgba(255, 255, 255, 0.12);
+          border-color: rgba(255, 255, 255, 0.35);
+          color: #ffffff;
+        }
+
+        /* Mobile Sign In Button (Fixes contrast against light drawer background) */
+        .mobile-btn-signin {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 44px;
+          border-radius: 6px;
+          background: var(--pale, #f0fdf4);
+          border: 1.5px solid rgba(26, 122, 60, 0.25);
+          font-family: var(--display);
+          font-size: 15px;
+          font-weight: 700;
+          color: var(--pine, #0a3d1e);
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .mobile-btn-signin:hover {
+          background: rgba(26, 122, 60, 0.12);
+          border-color: rgba(26, 122, 60, 0.4);
+        }
+
+        /* Get Started Button */
+        .btn-get-started {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 6px;
+          height: 36px;
+          padding: 0 16px;
+          border-radius: 6px;
+          background: linear-gradient(180deg, #097142 0%, #054126 100%);
+          border: 1px solid #22c55e;
+          box-shadow: 0 2px 10px rgba(5, 65, 38, 0.4);
+          font-family: var(--display);
+          font-size: 13px;
+          font-weight: 700;
+          color: #6ee7b7;
+          text-decoration: none;
+          cursor: pointer;
+          transition: all 0.22s ease;
+        }
+
+        .btn-get-started:hover {
+          background: linear-gradient(180deg, #0c8a51 0%, #075231 100%);
+          border-color: #4ade80;
+          color: #ffffff;
+          box-shadow: 0 4px 14px rgba(34, 197, 94, 0.35);
+          transform: translateY(-1px);
+        }
+
+        .btn-get-started:hover .rocket-icon {
+          transform: translateY(-2px) rotate(-8deg);
+          transition: transform 0.22s ease;
+        }
+
+        .btn-signin:active,
+        .mobile-btn-signin:active,
+        .btn-get-started:active {
+          transform: translateY(1px);
+        }
+
         @media (max-width: 700px) {
           .nav-desk  { display: none !important; }
           .nav-burger{ display: flex !important; }
