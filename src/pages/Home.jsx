@@ -58,7 +58,7 @@ export default function Home() {
             <Crest className="ha-crest" />
             <span className="ha-tag-badge">
               <span className="ha-tag-dot"></span>
-              Department of Computer Science &amp; Engineering, BAIUST
+              Department of CSE, BAIUST
             </span>
           </div>
 
@@ -224,46 +224,51 @@ export default function Home() {
         .ha-home .disp { font-family: 'Fraunces', serif; }
         .ha-home .mono { font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.02em; }
 
-        .ha-wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; }
-        .ha-section { padding: clamp(4.5rem, 10vw, 8rem) 0; position: relative; }
+        .ha-wrap { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; }
+        @media (min-width: 768px) { .ha-wrap { padding: 0 32px; } }
+
+        .ha-section { padding: clamp(3.5rem, 8vw, 8rem) 0; position: relative; }
         .ha-label {
           font-family: 'IBM Plex Mono', monospace;
-          font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.1em;
+          font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em;
           color: var(--brass-deep);
           font-weight: 600;
-          margin-bottom: 14px;
+          margin-bottom: 10px;
         }
-        .ha-rule { display: flex; align-items: center; width: 74px; margin-bottom: 28px; }
+        .ha-rule { display: flex; align-items: center; width: 64px; margin-bottom: 20px; }
         .ha-rule::before, .ha-rule::after { content: ""; flex: 1; height: 1px; background: var(--line-gold); }
-        .ha-rule span { width: 5px; height: 5px; margin: 0 9px; background: var(--brass);
+        .ha-rule span { width: 5px; height: 5px; margin: 0 8px; background: var(--brass);
           transform: rotate(45deg); flex-shrink: 0; }
         
         .ha-h2 {
           font-weight: 600;
-          font-size: clamp(28px, 4.5vw, 42px);
-          line-height: 1.15;
+          font-size: clamp(24px, 4vw, 42px);
+          line-height: 1.2;
           letter-spacing: -0.5px;
           color: var(--ink);
-          margin-bottom: 20px;
-        }
-        .ha-p {
-          font-size: 16.5px;
-          line-height: 1.8;
-          color: var(--ink-soft);
-          font-weight: 300;
           margin-bottom: 16px;
         }
-        .ha-p-soft { color: var(--ink-faint); margin-bottom: 36px; }
+        .ha-p {
+          font-size: 15.5px;
+          line-height: 1.7;
+          color: var(--ink-soft);
+          font-weight: 300;
+          margin-bottom: 14px;
+        }
+        .ha-p-soft { color: var(--ink-faint); margin-bottom: 28px; }
 
         /* Buttons */
         .ha-btn {
-          display: inline-flex; align-items: center; gap: 10px; justify-content: center;
-          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px;
+          display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+          font-family: 'Inter', sans-serif; font-weight: 600; font-size: 13.5px;
           letter-spacing: 0.02em;
-          padding: 14px 28px; border-radius: 6px; min-height: 48px;
+          padding: 12px 22px; border-radius: 6px; min-height: 44px;
           text-decoration: none; border: 1.5px solid transparent;
           transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
           cursor: pointer;
+        }
+        @media (min-width: 768px) {
+          .ha-btn { padding: 14px 28px; font-size: 14px; min-height: 48px; }
         }
         .ha-btn-solid { 
           background: var(--forest); color: var(--paper-deep);
@@ -311,87 +316,134 @@ export default function Home() {
           background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
         }
 
-        .ha-crest { width: 44px; height: 44px; color: var(--brass-light); }
-        .ha-crest-cta { color: var(--brass-light); margin: 0 auto 20px; }
+        .ha-crest-cta { color: var(--brass-light); margin: 0 auto 16px; }
         .ha-watermark { position: absolute; top: -40px; right: -40px; width: 420px; height: 420px;
           color: var(--ink); opacity: 0.025; pointer-events: none; display: none; }
 
-        /* Hero Section */
-        .ha-hero { position: relative; min-height: clamp(640px, 92vh, 820px);
-          display: flex; align-items: flex-end; overflow: hidden; }
+        /* Hero Section - Fixed Mobile Alignment & Layout */
+        .ha-hero { 
+          position: relative; 
+          min-height: 100vh;
+          display: flex; 
+          align-items: flex-end; 
+          overflow: hidden; 
+        }
         .ha-hero-media { position: absolute; inset: 0; }
         .ha-hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
-        .ha-hero-scrim { position: absolute; inset: 0;
-          background: linear-gradient(180deg, rgba(5,20,11,0.92) 0%, rgba(5,20,11,0.82) 50%, rgba(5,20,11,0.6) 100%); }
-        .ha-hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto;
-          padding: clamp(3rem, 8vw, 6rem) 32px clamp(3.5rem, 8vw, 5.5rem); width: 100%; }
-        
-        .ha-hero-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
-        .ha-tag-badge {
-          display: inline-flex; align-items: center; gap: 8px;
-          font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.02em;
-          color: var(--brass-light); background: rgba(232,212,162,0.1);
-          padding: 6px 14px; border-radius: 100px; border: 1px solid rgba(232,212,162,0.2);
-          backdrop-filter: blur(4px);
+        .ha-hero-scrim { 
+          position: absolute; inset: 0;
+          background: linear-gradient(180deg, rgba(5,20,11,0.94) 0%, rgba(5,20,11,0.86) 50%, rgba(5,20,11,0.72) 100%); 
         }
-        .ha-tag-dot { width: 6px; height: 6px; background: var(--brass); border-radius: 50%; display: inline-block; }
+        .ha-hero-inner { 
+          position: relative; z-index: 1; max-width: 1200px; margin: 0 0;
+          padding: 1.5rem 20px 3rem; width: 100%; 
+        }
+        @media (min-width: 768px) {
+          .ha-hero-inner { padding: 6rem 32px 4.5rem; }
+        }
+        
+        /* Fixed Header Flex Container */
+        .ha-hero-header { 
+          display: flex; 
+          align-items: center; 
+          gap: 10px; 
+          margin-bottom: 16px; 
+          flex-wrap: nowrap; 
+        }
+        .ha-crest { 
+          width: 30px; 
+          height: 30px; 
+          color: var(--brass-light); 
+          flex-shrink: 0; 
+        }
+        @media (min-width: 768px) { 
+          .ha-crest { width: 44px; height: 44px; } 
+        }
+
+        .ha-tag-badge {
+          display: inline-flex; 
+          align-items: center; 
+          gap: 6px;
+          font-family: 'IBM Plex Mono', monospace; 
+          font-size: 10px; 
+          letter-spacing: 0.02em;
+          color: var(--brass-light); 
+          background: rgba(232,212,162,0.1);
+          padding: 4px 10px; 
+          border-radius: 100px; 
+          border: 1px solid rgba(232,212,162,0.2);
+          backdrop-filter: blur(4px);
+          white-space: normal; 
+        }
+        @media (min-width: 768px) { 
+          .ha-tag-badge { font-size: 12px; padding: 6px 14px; } 
+        }
+        .ha-tag-dot { width: 5px; height: 5px; background: var(--brass); border-radius: 50%; display: inline-block; flex-shrink: 0; }
         
         .ha-hero-h { color: var(--white); font-weight: 500;
-          font-size: clamp(36px, 6.5vw, 62px); line-height: 1.08; letter-spacing: -1px;
-          max-width: 15ch; margin-bottom: 24px; }
+          font-size: clamp(32px, 7vw, 62px); line-height: 1.1; letter-spacing: -1px;
+          max-width: 15ch; margin-bottom: 16px; }
         .ha-gold-gradient {
           background: linear-gradient(135deg, #FFFFFF 30%, var(--brass-light) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
         }
-        .ha-hero-p { color: rgba(255,255,255,0.78); font-size: clamp(16px, 2.5vw, 18px);
-          line-height: 1.8; font-weight: 300; max-width: 48ch; margin-bottom: 40px; }
-        .ha-hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+        .ha-hero-p { color: rgba(255,255,255,0.78); font-size: clamp(15px, 2.5vw, 18px);
+          line-height: 1.7; font-weight: 300; max-width: 48ch; margin-bottom: 28px; }
+        .ha-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
         
         /* Glassmorphic Ledger */
         .ha-ledger { 
-          display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
-          background: rgba(255, 255, 255, 0.04);
+          display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+          background: rgba(255, 255, 255, 0.05);
           backdrop-filter: blur(12px);
           border: 1px solid rgba(255, 255, 255, 0.1);
-          padding: 24px 32px; border-radius: 12px;
+          padding: 16px 20px; border-radius: 10px;
           max-width: 720px;
         }
         @media (min-width: 600px) {
-          .ha-ledger { grid-template-columns: repeat(4, 1fr); }
+          .ha-ledger { grid-template-columns: repeat(4, 1fr); padding: 24px 32px; gap: 20px; }
         }
         .ha-ledger dt { font-family: 'Fraunces', serif; font-weight: 500; color: var(--white);
-          font-size: clamp(24px, 3.5vw, 32px); line-height: 1; margin-bottom: 6px; }
-        .ha-ledger dd { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.05em;
+          font-size: clamp(22px, 3.5vw, 32px); line-height: 1; margin-bottom: 4px; }
+        .ha-ledger dd { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 0.05em;
           color: var(--brass-light); margin: 0; text-transform: uppercase; }
+        @media (min-width: 768px) { .ha-ledger dd { font-size: 11px; } }
 
         /* Shared 2-Col Grid */
-        .ha-two-col { display: grid; grid-template-columns: 1fr; gap: 56px; align-items: center; }
+        .ha-two-col { display: grid; grid-template-columns: 1fr; gap: 40px; align-items: center; }
         .ha-about { background: var(--paper); overflow: hidden; }
         .ha-scene-card { 
           display: flex; justify-content: center; 
-          background: var(--white); padding: 24px; border-radius: 16px;
+          background: var(--white); padding: 16px; border-radius: 14px;
           box-shadow: var(--shadow-md); border: 1px solid var(--line-soft);
         }
+        @media (min-width: 768px) { .ha-scene-card { padding: 24px; border-radius: 16px; } }
 
         /* Modern Catalog Grid */
         .ha-catalog-section { background: var(--white); }
-        .ha-catalog-header { margin-bottom: 48px; }
-        .ha-intro { max-width: 52ch; font-size: 17px; }
+        .ha-catalog-header { margin-bottom: 36px; }
+        .ha-intro { max-width: 52ch; font-size: 16px; }
         
         .ha-catalog-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 24px;
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        @media (min-width: 640px) {
+          .ha-catalog-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         }
         .ha-catalog-card {
           background: var(--paper);
           border: 1px solid var(--line);
-          border-radius: 12px;
-          padding: 32px 28px;
+          border-radius: 10px;
+          padding: 24px 20px;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           position: relative;
           overflow: hidden;
+        }
+        @media (min-width: 768px) {
+          .ha-catalog-card { padding: 32px 28px; border-radius: 12px; }
         }
         .ha-catalog-card::before {
           content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
@@ -404,40 +456,44 @@ export default function Home() {
           border-color: rgba(179,142,54,0.3);
         }
         .ha-catalog-card:hover::before { opacity: 1; }
-        .ha-catalog-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-        .ha-catalog-code { font-size: 13px; font-weight: 600; color: var(--brass-deep); background: rgba(179,142,54,0.12); padding: 4px 10px; border-radius: 4px; }
-        .ha-card-icon-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-gold); }
-        .ha-catalog-title { font-weight: 600; font-size: 20px; color: var(--ink); margin-bottom: 10px; line-height: 1.3; }
-        .ha-catalog-desc { font-size: 14.5px; line-height: 1.7; color: var(--ink-soft); font-weight: 300; }
+        .ha-catalog-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .ha-catalog-code { font-size: 12px; font-weight: 600; color: var(--brass-deep); background: rgba(179,142,54,0.12); padding: 3px 8px; border-radius: 4px; }
+        .ha-card-icon-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--line-gold); }
+        .ha-catalog-title { font-weight: 600; font-size: 18px; color: var(--ink); margin-bottom: 8px; line-height: 1.3; }
+        @media (min-width: 768px) { .ha-catalog-title { font-size: 20px; } }
+        .ha-catalog-desc { font-size: 14px; line-height: 1.6; color: var(--ink-soft); font-weight: 300; }
 
         /* Modern Steps Section */
         .ha-how { background: var(--paper); }
-        .ha-steps { list-style: none; margin: 0 0 40px; padding: 0; display: flex; flex-direction: column; gap: 24px; }
+        .ha-steps { list-style: none; margin: 0 0 32px; padding: 0; display: flex; flex-direction: column; gap: 16px; }
         .ha-step-item { 
-          display: flex; gap: 20px; align-items: flex-start; 
-          background: var(--white); padding: 20px 24px; border-radius: 10px;
+          display: flex; gap: 16px; align-items: flex-start; 
+          background: var(--white); padding: 16px 18px; border-radius: 10px;
           border: 1px solid var(--line-soft); box-shadow: var(--shadow-sm);
         }
+        @media (min-width: 768px) { .ha-step-item { padding: 20px 24px; gap: 20px; } }
         .ha-step-n { 
-          font-size: 14px; font-weight: 600; color: var(--forest); 
-          background: var(--paper-deep); width: 36px; height: 36px;
+          font-size: 13px; font-weight: 600; color: var(--forest); 
+          background: var(--paper-deep); width: 32px; height: 32px;
           display: flex; align-items: center; justify-content: center;
           border-radius: 50%; flex-shrink: 0;
         }
-        .ha-step-title { font-weight: 600; font-size: 17px; color: var(--ink); margin-bottom: 4px; }
-        .ha-step-desc { font-size: 14px; line-height: 1.65; color: var(--ink-soft); font-weight: 300; }
+        @media (min-width: 768px) { .ha-step-n { width: 36px; height: 36px; font-size: 14px; } }
+        .ha-step-title { font-weight: 600; font-size: 16px; color: var(--ink); margin-bottom: 3px; }
+        .ha-step-desc { font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); font-weight: 300; }
 
         /* CTA Band */
-        .ha-cta { position: relative; min-height: clamp(320px, 40vw, 420px);
+        .ha-cta { position: relative; min-height: 320px;
           display: flex; align-items: center; overflow: hidden; }
         .ha-cta img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .ha-cta-scrim { position: absolute; inset: 0; background: rgba(5,20,11,0.92); }
         .ha-cta-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto;
-          padding: clamp(3rem, 6vw, 4.5rem) 32px; text-align: center; }
-        .ha-cta-inner h2 { color: var(--white); font-weight: 500; font-size: clamp(26px, 4.5vw, 38px);
-          line-height: 1.2; margin-bottom: 16px; }
-        .ha-cta-inner p { color: rgba(255,255,255,0.7); font-size: 16px; line-height: 1.8;
-          font-weight: 300; margin-bottom: 36px; }
+          padding: 3.5rem 20px; text-align: center; }
+        @media (min-width: 768px) { .ha-cta-inner { padding: 4.5rem 32px; } }
+        .ha-cta-inner h2 { color: var(--white); font-weight: 500; font-size: clamp(24px, 4.5vw, 38px);
+          line-height: 1.2; margin-bottom: 14px; }
+        .ha-cta-inner p { color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.7;
+          font-weight: 300; margin-bottom: 28px; }
 
         /* Entrance Motion */
         .ha-rise { animation: haRise 0.85s cubic-bezier(.16,1,.3,1) both; }
@@ -446,7 +502,7 @@ export default function Home() {
 
         /* Responsive Breakpoints */
         @media (min-width: 860px) {
-          .ha-two-col { grid-template-columns: 1fr 1fr; }
+          .ha-two-col { grid-template-columns: 1fr 1fr; gap: 56px; }
           .ha-catalog-header { display: flex; justify-content: space-between; align-items: flex-end; }
         }
         @media (min-width: 1024px) {
