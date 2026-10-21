@@ -55,6 +55,24 @@ export default function CourseDetail({ user }) {
     setResources((prev) => prev.filter((r) => r._id !== id));
   };
 
+  // Helper function to get inline viewable URL for Cloudinary files
+  const getInlineViewUrl = (url) => {
+    if (!url) return "";
+    if (url.includes("cloudinary.com") && url.includes("/raw/upload/")) {
+      return url.replace("/raw/upload/", "/raw/upload/fl_inline/");
+    }
+    return url;
+  };
+
+  // Helper function to get download URL
+  const getDownloadUrl = (url) => {
+    if (!url) return "";
+    if (url.includes("cloudinary.com") && url.includes("/raw/upload/")) {
+      return url.replace("/raw/upload/", "/raw/upload/fl_attachment/");
+    }
+    return url;
+  };
+
   if (!course)
     return (
       <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "4rem 1.5rem", textAlign: "center" }}>
@@ -425,31 +443,63 @@ export default function CourseDetail({ user }) {
 
                     <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
                       {r.fileUrl && (
-                        <a
-                          href={r.fileUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          style={{
-                            width: 36,
-                            height: 36,
-                            borderRadius: "8px",
-                            border: "1px solid #D8E2DC",
-                            backgroundColor: "#FFFFFF",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            color: "#0F382C",
-                            textDecoration: "none",
-                            transition: "all 0.18s ease",
-                          }}
-                          className="action-btn"
-                          title={r.type === "video" ? "Open Link" : "Download File"}
-                        >
-                          <span className="ms sm" style={{ fontSize: "18px" }}>
-                            {r.type === "video" ? "open_in_new" : "download"}
-                          </span>
-                        </a>
+                        <>
+                          {/* View / Preview Button */}
+                          <a
+                            href={getInlineViewUrl(r.fileUrl)}
+                            target="_blank"
+                            rel="noreferrer"
+                            style={{
+                              width: 36,
+                              height: 36,
+                              borderRadius: "8px",
+                              border: "1px solid #D8E2DC",
+                              backgroundColor: "#FFFFFF",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              color: "#0F382C",
+                              textDecoration: "none",
+                              transition: "all 0.18s ease",
+                            }}
+                            className="action-btn"
+                            title={r.type === "video" ? "Open Video Link" : "View Resource Online"}
+                          >
+                            <span className="ms sm" style={{ fontSize: "18px" }}>
+                              {r.type === "video" ? "open_in_new" : "visibility"}
+                            </span>
+                          </a>
+
+                          {/* Download Button (Only for files, not needed for pure external links if any) */}
+                          {r.type !== "video" && (
+                            <a
+                              href={getDownloadUrl(r.fileUrl)}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{
+                                width: 36,
+                                height: 36,
+                                borderRadius: "8px",
+                                border: "1px solid #D8E2DC",
+                                backgroundColor: "#FFFFFF",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                color: "#0F382C",
+                                textDecoration: "none",
+                                transition: "all 0.18s ease",
+                              }}
+                              className="action-btn"
+                              title="Download File"
+                            >
+                              <span className="ms sm" style={{ fontSize: "18px" }}>
+                                download
+                              </span>
+                            </a>
+                          )}
+                        </>
                       )}
+                      
                       {user && r.uploadedBy?._id === user._id && (
                         <button
                           onClick={() => handleDelete(r._id)}
