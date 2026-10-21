@@ -4,41 +4,46 @@ import { SEMESTERS, getCourseIcon } from "../data/courses";
 import api from "../utils/api";
 
 const msMap = {
-  "binary-tree":"account_tree","route":"alt_route","code":"code","database":"storage",
-  "cpu":"memory","network":"hub","brain":"psychology","robot":"smart_toy",
-  "world-www":"language","terminal-2":"terminal","circuit-board":"developer_board",
-  "git-branch":"fork_right","math":"calculate","calculator":"calculate","atom":"science",
-  "flask":"biotech","bolt":"bolt","language":"translate","book":"menu_book",
-  "pencil-ruler":"design_services","antenna":"cell_tower","cpu-2":"computer",
-  "award":"workspace_premium","microscope":"biotech","tool":"build",
-  "layout-project":"assignment","chart-bar":"bar_chart","users":"groups",
-  "chart-dots":"analytics","variable":"functions","omega":"all_inclusive","book-2":"auto_stories",
+  "binary-tree": "account_tree", "route": "alt_route", "code": "code", "database": "storage",
+  "cpu": "memory", "network": "hub", "brain": "psychology", "robot": "smart_toy",
+  "world-www": "language", "terminal-2": "terminal", "circuit-board": "developer_board",
+  "git-branch": "fork_right", "math": "calculate", "calculator": "calculate", "atom": "science",
+  "flask": "biotech", "bolt": "bolt", "language": "translate", "book": "menu_book",
+  "pencil-ruler": "design_services", "antenna": "cell_tower", "cpu-2": "computer",
+  "award": "workspace_premium", "microscope": "biotech", "tool": "build",
+  "layout-project": "assignment", "chart-bar": "bar_chart", "users": "groups",
+  "chart-dots": "analytics", "variable": "functions", "omega": "all_inclusive", "book-2": "auto_stories",
 };
 
 const TABS = [
-  { key:"book",  icon:"menu_book",   label:"Textbooks",  color:"#0f5228", bg:"#e6f9ee" },
-  { key:"note",  icon:"description", label:"Notes",      color:"#1d4ed8", bg:"#eff6ff" },
-  { key:"video", icon:"play_circle", label:"Videos",     color:"#c2410c", bg:"#fff7ed" },
-  { key:"other", icon:"folder_open", label:"Others",     color:"#7c3aed", bg:"#f5f3ff" },
+  { key: "book", icon: "menu_book", label: "Textbooks", color: "#0F382C", bg: "#EDF4F1" },
+  { key: "note", icon: "description", label: "Notes", color: "#1D4ED8", bg: "#EFF6FF" },
+  { key: "video", icon: "play_circle", label: "Videos", color: "#C2410C", bg: "#FFF7ED" },
+  { key: "other", icon: "folder_open", label: "Others", color: "#7C3AED", bg: "#F5F3FF" },
 ];
 
 export default function CourseDetail({ user }) {
   const { courseCode } = useParams();
   const decoded = decodeURIComponent(courseCode);
-  const [tab, setTab]             = useState("book");
+  const [tab, setTab] = useState("book");
   const [resources, setResources] = useState([]);
-  const [loading, setLoading]     = useState(true);
+  const [loading, setLoading] = useState(true);
 
   let course = null, sem = null;
   for (const s of SEMESTERS) {
-    const c = s.courses.find(c => c.code === decoded);
-    if (c) { course = c; sem = s; break; }
+    const c = s.courses.find((c) => c.code === decoded);
+    if (c) {
+      course = c;
+      sem = s;
+      break;
+    }
   }
 
   useEffect(() => {
     if (!course) return;
     setLoading(true);
-    api.get(`/resources?course=${encodeURIComponent(decoded)}&type=${tab}`)
+    api
+      .get(`/resources?course=${encodeURIComponent(decoded)}&type=${tab}`)
       .then(({ data }) => setResources(data.data || []))
       .catch(() => setResources([]))
       .finally(() => setLoading(false));
@@ -47,177 +52,463 @@ export default function CourseDetail({ user }) {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this resource?")) return;
     await api.delete(`/resources/${id}`);
-    setResources(prev => prev.filter(r => r._id !== id));
+    setResources((prev) => prev.filter((r) => r._id !== id));
   };
 
-  if (!course) return (
-    <div style={{ padding:"3rem var(--px)", textAlign:"center" }}>
-      <p style={{ color:"var(--ink3)", marginBottom:16 }}>Course not found.</p>
-      <Link to="/levels" className="btn btn-primary">Back to Levels</Link>
-    </div>
-  );
+  if (!course)
+    return (
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "4rem 1.5rem", textAlign: "center" }}>
+        <p style={{ color: "#6C7A75", marginBottom: 16, fontFamily: "var(--body, sans-serif)" }}>
+          Course not found.
+        </p>
+        <Link
+          to="/levels"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            padding: "10px 20px",
+            borderRadius: "8px",
+            backgroundColor: "#0F382C",
+            color: "#fff",
+            textDecoration: "none",
+            fontWeight: 600,
+            fontSize: "14px",
+          }}
+        >
+          Back to Levels
+        </Link>
+      </div>
+    );
 
   const courseIcon = msMap[getCourseIcon(course.code, course.title)] || "auto_stories";
-  const activeTab  = TABS.find(t => t.key === tab);
+  const activeTab = TABS.find((t) => t.key === tab);
 
   return (
-    <div style={{ maxWidth:"var(--max)", margin:"0 auto", padding:"1.5rem var(--px) 3rem" }}>
-      <Link to={`/semester/${sem.id}`} style={{ fontFamily:"var(--display)",
-        fontSize:"var(--fs-sm)", fontWeight:700, color:"var(--leaf)",
-        display:"inline-flex", alignItems:"center", gap:5,
-        marginBottom:20, textDecoration:"none" }}>
-        <span className="ms sm">arrow_back</span> {sem.name}
-      </Link>
+    <div style={{ backgroundColor: "#F9FAF8", minHeight: "100vh", color: "#1C2826", width: "100%" }}>
+      <main
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "2rem 1.5rem 4rem",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Back Navigation Link */}
+        <Link
+          to={`/semester/${sem.id}`}
+          style={{
+            fontFamily: "var(--body, sans-serif)",
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "#1B634B",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            marginBottom: "20px",
+            textDecoration: "none",
+            transition: "opacity 0.2s",
+          }}
+          className="back-btn"
+        >
+          <span className="ms sm" style={{ fontSize: "16px" }}>arrow_back</span>
+          {sem.name}
+        </Link>
 
-      {/* Course header */}
-      <div className="card" style={{ padding:"clamp(1rem,4vw,1.5rem)",
-        marginBottom:0, borderBottomLeftRadius:0, borderBottomRightRadius:0,
-        borderRadius:"var(--r-xl) var(--r-xl) 0 0", borderBottom:"none" }}>
-
-        <div style={{ display:"flex", alignItems:"flex-start",
-          justifyContent:"space-between", gap:12, flexWrap:"wrap" }}>
-          <div style={{ display:"flex", alignItems:"center", gap:12, flex:1, minWidth:0 }}>
-            <div style={{ width:50, height:50, minWidth:50, borderRadius:13,
-              background:"var(--pale)", border:"1.5px solid rgba(26,122,60,0.18)",
-              display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-              <span className="ms lg" style={{ color:"var(--leaf)", fontSize:24 }}>{courseIcon}</span>
-            </div>
-            <div style={{ minWidth:0 }}>
-              <h1 style={{ fontFamily:"var(--display)", fontWeight:800,
-                fontSize:"clamp(14px,4vw,19px)",
-                color:"var(--ink)", marginBottom:4, lineHeight:1.25 }}>
-                {course.title}
-              </h1>
-              <div style={{ display:"flex", alignItems:"center", gap:7, flexWrap:"wrap" }}>
-                <span style={{ fontFamily:"var(--mono)", fontSize:"clamp(10px,2.5vw,12.5px)",
-                  color:"var(--leaf)", fontWeight:500,
-                  background:"var(--pale)", padding:"2px 9px",
-                  borderRadius:"var(--r-pill)" }}>{course.code}</span>
-                <span style={{ fontFamily:"var(--body)", fontSize:"clamp(10px,2.5vw,12px)",
-                  color:"var(--ink3)" }}>
-                  {course.credit} Cr · L{sem.level} T{sem.term}
-                </span>
-              </div>
-            </div>
-          </div>
-          <Link to={`/upload?course=${encodeURIComponent(decoded)}&semId=${sem.id}`}
-            className="btn btn-primary"
-            style={{ fontSize:"var(--fs-sm)", padding:"9px 16px",
-              borderRadius:"var(--r-pill)", flexShrink:0 }}>
-            <span className="ms sm">upload_file</span>
-            <span className="hide-xs"> Submit</span>
-          </Link>
-        </div>
-
-        {/* Tabs — scrollable on mobile */}
-        <div style={{ display:"flex", gap:0, borderBottom:"1.5px solid var(--border)",
-          marginTop:18, overflowX:"auto", scrollbarWidth:"none" }}>
-          {TABS.map(t => (
-            <button key={t.key} onClick={() => setTab(t.key)} style={{
-              display:"inline-flex", alignItems:"center", gap:5,
-              padding:"10px clamp(10px,3vw,16px)",
-              fontFamily:"var(--display)", fontWeight: tab===t.key ? 700 : 500,
-              fontSize:"clamp(11.5px,2.5vw,13.5px)",
-              color: tab===t.key ? t.color : "var(--ink3)",
-              background:"none", border:"none", cursor:"pointer",
-              borderBottom: tab===t.key ? `2.5px solid ${t.color}` : "2.5px solid transparent",
-              marginBottom:"-1.5px", whiteSpace:"nowrap",
-              transition:"color 0.15s",
-              WebkitTapHighlightColor:"transparent",
-            }}>
-              <span className="ms sm" style={{ color: tab===t.key ? t.color : "var(--ink4)" }}>{t.icon}</span>
-              {t.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Resources */}
-      <div className="card" style={{ borderTopLeftRadius:0, borderTopRightRadius:0,
-        borderTop:"none", padding:"clamp(1rem,4vw,1.5rem)",
-        borderRadius:"0 0 var(--r-xl) var(--r-xl)" }}>
-
-        {loading ? (
-          <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-            {[1,2,3].map(i => <div key={i} className="skeleton" style={{ height:68 }} />)}
-          </div>
-        ) : resources.length === 0 ? (
-          <div style={{ textAlign:"center", padding:"2.5rem 1rem" }} className="fade-in">
-            <div style={{ width:56, height:56, borderRadius:"50%", background:"var(--bg2)",
-              display:"flex", alignItems:"center", justifyContent:"center",
-              margin:"0 auto 14px" }}>
-              <span className="ms xl" style={{ color:"var(--ink4)", fontSize:28 }}>inbox</span>
-            </div>
-            <h3 style={{ fontFamily:"var(--display)", fontWeight:700,
-              fontSize:"var(--fs-md)", color:"var(--ink)", marginBottom:6 }}>
-              No {activeTab?.label} Yet
-            </h3>
-            <p style={{ fontFamily:"var(--body)", fontSize:"var(--fs-sm)",
-              color:"var(--ink3)", fontWeight:300, lineHeight:1.65,
-              maxWidth:280, margin:"0 auto 18px" }}>
-              Be the first to contribute a resource for this course.
-            </p>
-            <Link to={`/upload?course=${encodeURIComponent(decoded)}&semId=${sem.id}&type=${tab}`}
-              className="btn btn-primary" style={{ display:"inline-flex",
-                fontSize:"var(--fs-sm)", borderRadius:"var(--r-pill)" }}>
-              <span className="ms sm">upload_file</span> Submit Resource
-            </Link>
-          </div>
-        ) : (
-          <div style={{ display:"flex", flexDirection:"column" }}>
-            {resources.map((r, idx) => (
-              <div key={r._id} style={{
-                display:"flex", alignItems:"center", gap:12,
-                padding:"clamp(10px,3vw,14px) 0",
-                borderBottom: idx < resources.length-1 ? "1px solid var(--border)" : "none",
-              }}>
-                <div style={{ width:40, height:40, minWidth:40, borderRadius:10,
-                  background:activeTab?.bg, flexShrink:0,
-                  display:"flex", alignItems:"center", justifyContent:"center",
-                  border:`1px solid ${activeTab?.color}22` }}>
-                  <span className="ms sm" style={{ color:activeTab?.color }}>{activeTab?.icon}</span>
+        {/* Main Card Container */}
+        <div
+          style={{
+            backgroundColor: "#FFFFFF",
+            borderRadius: "16px",
+            border: "1px solid #E8EFEB",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
+            overflow: "hidden",
+          }}
+        >
+          {/* Course Header Info */}
+          <div
+            style={{
+              padding: "clamp(1.2rem, 3vw, 1.8rem)",
+              borderBottom: "1px solid #E8EFEB",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                justifyContent: "space-between",
+                gap: 16,
+                flexWrap: "wrap",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 14, flex: 1, minWidth: 0 }}>
+                {/* Course Icon Box */}
+                <div
+                  style={{
+                    width: 52,
+                    height: 52,
+                    minWidth: 52,
+                    borderRadius: "12px",
+                    backgroundColor: "#EDF4F1",
+                    border: "1px solid #D2E3DB",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    flexShrink: 0,
+                  }}
+                >
+                  <span className="ms" style={{ color: "#1B634B", fontSize: "24px" }}>
+                    {courseIcon}
+                  </span>
                 </div>
-                <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontFamily:"var(--display)", fontWeight:700,
-                    fontSize:"clamp(13px,3vw,15px)",
-                    color:"var(--ink)", marginBottom:2, lineHeight:1.3,
-                    overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
-                    {r.title}
-                  </p>
-                  <p style={{ fontFamily:"var(--body)",
-                    fontSize:"clamp(10.5px,2.5vw,12px)",
-                    color:"var(--ink3)", fontWeight:300 }}>
-                    {r.uploadedBy?.name || "Anonymous"}
-                    {r.createdAt && ` · ${new Date(r.createdAt).toLocaleDateString("en-GB",
-                      { day:"numeric", month:"short", year:"numeric" })}`}
-                  </p>
-                </div>
-                <div style={{ display:"flex", gap:6, flexShrink:0 }}>
-                  {r.fileUrl && (
-                    <a href={r.fileUrl} target="_blank" rel="noreferrer"
-                      style={{ width:36, height:36, borderRadius:9,
-                        border:"1.5px solid var(--border2)",
-                        background:"var(--card)", display:"flex",
-                        alignItems:"center", justifyContent:"center",
-                        color:"var(--leaf)" }}>
-                      <span className="ms sm">{r.type==="video" ? "open_in_new" : "download"}</span>
-                    </a>
-                  )}
-                  {user && r.uploadedBy?._id === user._id && (
-                    <button onClick={() => handleDelete(r._id)} style={{
-                      width:36, height:36, borderRadius:9,
-                      border:"1.5px solid #fecaca", background:"#fef2f2",
-                      display:"flex", alignItems:"center",
-                      justifyContent:"center", color:"#991b1b", cursor:"pointer" }}>
-                      <span className="ms sm">delete</span>
-                    </button>
-                  )}
+
+                {/* Course Title & Code */}
+                <div style={{ minWidth: 0 }}>
+                  <h1
+                    style={{
+                      fontFamily: "var(--display, sans-serif)",
+                      fontWeight: 800,
+                      fontSize: "clamp(18px, 3.5vw, 22px)",
+                      color: "#111B18",
+                      marginBottom: "6px",
+                      lineHeight: 1.25,
+                    }}
+                  >
+                    {course.title}
+                  </h1>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                    <span
+                      style={{
+                        fontFamily: "var(--mono, monospace)",
+                        fontSize: "11px",
+                        color: "#1B634B",
+                        fontWeight: 600,
+                        backgroundColor: "#EDF4F1",
+                        padding: "2px 8px",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      {course.code}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--body, sans-serif)",
+                        fontSize: "12px",
+                        color: "#6C7A75",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {course.credit} Cr · Level {sem.level} Term {sem.term}
+                    </span>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              {/* Submit Button */}
+              <Link
+                to={`/upload?course=${encodeURIComponent(decoded)}&semId=${sem.id}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "10px 18px",
+                  borderRadius: "8px",
+                  backgroundColor: "#0F382C",
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                  fontSize: "13px",
+                  textDecoration: "none",
+                  boxShadow: "0 2px 6px rgba(15, 56, 44, 0.15)",
+                  transition: "all 0.2s ease",
+                  flexShrink: 0,
+                }}
+                className="btn-primary-hover"
+              >
+                <span className="ms sm" style={{ fontSize: "16px" }}>upload_file</span>
+                <span>Submit Resource</span>
+              </Link>
+            </div>
+
+            {/* Navigation Tabs */}
+            <div
+              style={{
+                display: "flex",
+                gap: "8px",
+                marginTop: "24px",
+                overflowX: "auto",
+                scrollbarWidth: "none",
+                paddingBottom: "2px",
+              }}
+            >
+              {TABS.map((t) => {
+                const isActive = tab === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    onClick={() => setTab(t.key)}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 6,
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      fontFamily: "var(--display, sans-serif)",
+                      fontWeight: isActive ? 700 : 500,
+                      fontSize: "13px",
+                      color: isActive ? t.color : "#6C7A75",
+                      backgroundColor: isActive ? t.bg : "transparent",
+                      border: isActive ? `1px solid ${t.color}25` : "1px solid transparent",
+                      cursor: "pointer",
+                      whiteSpace: "nowrap",
+                      transition: "all 0.18s ease",
+                      outline: "none",
+                    }}
+                  >
+                    <span className="ms sm" style={{ fontSize: "18px", color: isActive ? t.color : "#8A9993" }}>
+                      {t.icon}
+                    </span>
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        )}
-      </div>
+
+          {/* Resources Content List / Empty State */}
+          <div style={{ padding: "clamp(1.2rem, 3vw, 1.8rem)" }}>
+            {loading ? (
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    style={{
+                      height: 64,
+                      backgroundColor: "#F4F7F5",
+                      borderRadius: "10px",
+                      animation: "pulse 1.5s infinite",
+                    }}
+                  />
+                ))}
+              </div>
+            ) : resources.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "3rem 1rem" }} className="fade-in">
+                <div
+                  style={{
+                    width: 58,
+                    height: 58,
+                    borderRadius: "50%",
+                    backgroundColor: "#F2F6F4",
+                    border: "1px solid #E1E8E4",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    margin: "0 auto 16px",
+                  }}
+                >
+                  <span className="ms xl" style={{ color: "#8A9993", fontSize: "28px" }}>
+                    inbox
+                  </span>
+                </div>
+                <h3
+                  style={{
+                    fontFamily: "var(--display, sans-serif)",
+                    fontWeight: 700,
+                    fontSize: "16px",
+                    color: "#111B18",
+                    marginBottom: "6px",
+                  }}
+                >
+                  No {activeTab?.label} Yet
+                </h3>
+                <p
+                  style={{
+                    fontFamily: "var(--body, sans-serif)",
+                    fontSize: "13px",
+                    color: "#6C7A75",
+                    fontWeight: 400,
+                    lineHeight: 1.6,
+                    maxWidth: "320px",
+                    margin: "0 auto 20px",
+                  }}
+                >
+                  Be the first to contribute a learning resource for this course.
+                </p>
+                <Link
+                  to={`/upload?course=${encodeURIComponent(decoded)}&semId=${sem.id}&type=${tab}`}
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "9px 18px",
+                    borderRadius: "8px",
+                    backgroundColor: "#0F382C",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    fontSize: "13px",
+                    textDecoration: "none",
+                  }}
+                  className="btn-primary-hover"
+                >
+                  <span className="ms sm" style={{ fontSize: "16px" }}>upload_file</span>
+                  Submit Resource
+                </Link>
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {resources.map((r) => (
+                  <div
+                    key={r._id}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 14,
+                      padding: "12px 16px",
+                      borderRadius: "10px",
+                      backgroundColor: "#FAFBF9",
+                      border: "1px solid #E8EFEB",
+                      transition: "all 0.2s ease",
+                    }}
+                    className="resource-item"
+                  >
+                    <div
+                      style={{
+                        width: 40,
+                        height: 40,
+                        minWidth: 40,
+                        borderRadius: "8px",
+                        backgroundColor: activeTab?.bg,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        border: `1px solid ${activeTab?.color}20`,
+                        flexShrink: 0,
+                      }}
+                    >
+                      <span className="ms sm" style={{ color: activeTab?.color, fontSize: "20px" }}>
+                        {activeTab?.icon}
+                      </span>
+                    </div>
+
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h4
+                        style={{
+                          fontFamily: "var(--display, sans-serif)",
+                          fontWeight: 700,
+                          fontSize: "14px",
+                          color: "#111B18",
+                          marginBottom: "3px",
+                          lineHeight: 1.3,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {r.title}
+                      </h4>
+                      <p
+                        style={{
+                          fontFamily: "var(--body, sans-serif)",
+                          fontSize: "12px",
+                          color: "#6C7A75",
+                          fontWeight: 400,
+                        }}
+                      >
+                        {r.uploadedBy?.name || "Anonymous"}
+                        {r.createdAt &&
+                          ` · ${new Date(r.createdAt).toLocaleDateString("en-GB", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}`}
+                      </p>
+                    </div>
+
+                    <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                      {r.fileUrl && (
+                        <a
+                          href={r.fileUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: "8px",
+                            border: "1px solid #D8E2DC",
+                            backgroundColor: "#FFFFFF",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "#0F382C",
+                            textDecoration: "none",
+                            transition: "all 0.18s ease",
+                          }}
+                          className="action-btn"
+                          title={r.type === "video" ? "Open Link" : "Download File"}
+                        >
+                          <span className="ms sm" style={{ fontSize: "18px" }}>
+                            {r.type === "video" ? "open_in_new" : "download"}
+                          </span>
+                        </a>
+                      )}
+                      {user && r.uploadedBy?._id === user._id && (
+                        <button
+                          onClick={() => handleDelete(r._id)}
+                          style={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: "8px",
+                            border: "1px solid #FECACA",
+                            backgroundColor: "#FEF2F2",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            color: "#991B1B",
+                            cursor: "pointer",
+                            transition: "all 0.18s ease",
+                          }}
+                          title="Delete Resource"
+                        >
+                          <span className="ms sm" style={{ fontSize: "18px" }}>
+                            delete
+                          </span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </main>
+
+      {/* Embedded Modern Styling & Hover Effects */}
+      <style>{`
+        .btn-primary-hover:hover {
+          background-color: #144D3A !important;
+          transform: translateY(-1px);
+        }
+
+        .resource-item:hover {
+          background-color: #FFFFFF !important;
+          border-color: #C8D8D0 !important;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .action-btn:hover {
+          background-color: #EDF4F1 !important;
+          border-color: #1B634B !important;
+        }
+
+        .back-btn:hover {
+          opacity: 0.8;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+      `}</style>
     </div>
   );
 }

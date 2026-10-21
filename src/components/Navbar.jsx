@@ -229,7 +229,7 @@ export default function Navbar({ user, onLogout }) {
           color: #ffffff;
         }
 
-        /* Mobile Sign In Button (Fixes contrast against light drawer background) */
+        /* Mobile Sign In Button */
         .mobile-btn-signin {
           display: inline-flex;
           align-items: center;

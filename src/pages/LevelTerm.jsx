@@ -1,146 +1,289 @@
 import { Link } from "react-router-dom";
 import { SEMESTERS } from "../data/courses";
 
+// Premium Accent Color Palette (Forest & Emerald Tones)
 const SEM_COLORS = [
-  "#0f5228","#1a7a3c","#2eb85c","#0a3d1e",
-  "#0f5228","#1a7a3c","#2eb85c","#0a3d1e",
+  "#0F382C", "#144D3A", "#1B634B", "#237A5C",
+  "#0F382C", "#144D3A", "#1B634B", "#237A5C",
 ];
 
 export default function LevelTerm({ user }) {
   return (
-    <div>
-    
-      <div style={{
-        background:"linear-gradient(135deg,#c5e8d0 0%,#e8f9ee 100%)",
-        padding:"2rem var(--px) 0",
-        overflow:"hidden",
-      }}>
-        <div style={{ maxWidth:"var(--max)", margin:"0 auto" }}>
-         
-          <div style={{ paddingBottom:"1.5rem" }} className="fade-in">
-            <div className="sec-label">BAIUST CSE · Academic Repository</div>
-            <h1 style={{
-              fontFamily:"var(--display)", fontWeight:800,
-              fontSize:"var(--fs-2xl)",
-              color:"var(--forest)", lineHeight:1.12,
-              letterSpacing:"-0.5px", marginBottom:12,
-            }}>
-              Welcome,{" "}
-              <span style={{ fontFamily:"var(--serif)", fontStyle:"italic",
-                fontWeight:400, color:"var(--leaf)" }}>
+    <div style={{ backgroundColor: "#F9FAF8", minHeight: "100vh", color: "#1C2826", width: "100%" }}>
+      {/* Hero Header Section */}
+      <section
+        style={{
+          background: "linear-gradient(180deg, #EDF3F0 0%, #F9FAF8 100%)",
+          padding: "3.5rem 1.5rem 2.5rem",
+          borderBottom: "1px solid rgba(15, 56, 44, 0.06)",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        <div style={{ maxWidth: "1200px", margin: "0 auto", width: "100%" }}>
+          <div style={{ maxWidth: "680px" }} className="fade-in">
+            {/* Pill Tag */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "6px 14px",
+                borderRadius: "100px",
+                backgroundColor: "rgba(15, 56, 44, 0.06)",
+                border: "1px solid rgba(15, 56, 44, 0.12)",
+                color: "#0F382C",
+                fontSize: "11px",
+                fontWeight: 700,
+                letterSpacing: "0.8px",
+                textTransform: "uppercase",
+                marginBottom: "20px",
+              }}
+            >
+              <span className="ms sm" style={{ fontSize: "14px" }}>verified</span>
+              BAIUST CSE · Academic Repository
+            </div>
+
+            {/* Title */}
+            <h1
+              style={{
+                fontFamily: "var(--display, sans-serif)",
+                fontWeight: 800,
+                fontSize: "clamp(2.2rem, 5vw, 3.2rem)",
+                color: "#0A241C",
+                lineHeight: 1.1,
+                letterSpacing: "-0.03em",
+                marginBottom: "16px",
+              }}
+            >
+              Welcome back,{" "}
+              <span
+                style={{
+                  fontFamily: "var(--serif, serif)",
+                  fontStyle: "italic",
+                  fontWeight: 400,
+                  color: "#1B634B",
+                }}
+              >
                 {user?.name?.split(" ")[0] || "Student"}
               </span>
             </h1>
-            <p style={{
-              fontFamily:"var(--body)", fontSize:"var(--fs-base)",
-              color:"var(--ink2)", fontWeight:300, lineHeight:1.75,
-              marginBottom:20, maxWidth:420,
-            }}>
-              Select your Level and Term to access books, notes, and videos for your courses.
+
+            {/* Description */}
+            <p
+              style={{
+                fontFamily: "var(--body, sans-serif)",
+                fontSize: "clamp(14px, 2vw, 16px)",
+                color: "#4A5854",
+                fontWeight: 400,
+                lineHeight: 1.65,
+                marginBottom: "28px",
+              }}
+            >
+              Access curated textbooks, lecture notes, lab manuals, and video resources organized by Level and Term.
             </p>
-            <div style={{ display:"flex", gap:10, flexWrap:"wrap" }}>
-              <Link to="/upload" className="btn btn-primary">
-                <span className="ms sm">upload_file</span> Submit Resource
+
+            {/* Action Buttons */}
+            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+              <Link
+                to="/upload"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "11px 22px",
+                  borderRadius: "10px",
+                  backgroundColor: "#0F382C",
+                  color: "#FFFFFF",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textDecoration: "none",
+                  boxShadow: "0 4px 14px rgba(15, 56, 44, 0.18)",
+                  transition: "all 0.2s ease",
+                }}
+                className="btn-primary-hover"
+              >
+                <span className="ms sm" style={{ fontSize: "18px" }}>upload_file</span> Submit Resource
               </Link>
-              <Link to="/search" className="btn btn-outline">
-                <span className="ms sm">search</span> Search
+              <Link
+                to="/search"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  padding: "11px 22px",
+                  borderRadius: "10px",
+                  backgroundColor: "#FFFFFF",
+                  color: "#0F382C",
+                  border: "1px solid #D8E2DC",
+                  fontWeight: 600,
+                  fontSize: "14px",
+                  textDecoration: "none",
+                  boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+                  transition: "all 0.2s ease",
+                }}
+                className="btn-outline-hover"
+              >
+                <span className="ms sm" style={{ fontSize: "18px" }}>search</span> Quick Search
               </Link>
             </div>
           </div>
-
-    
         </div>
-      </div>
+      </section>
 
-      {/* Grid */}
-      <div style={{ maxWidth:"var(--max)", margin:"0 auto",
-        padding:"1.75rem var(--px) 3rem" }}>
-
-        <div className="sec-rule">
-          <span className="sec-rule-label">Select Level &amp; Term</span>
+      {/* Main Content Area */}
+      <main
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "2.5rem 1.5rem 4rem",
+          width: "100%",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* Section Divider */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            marginBottom: "28px",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: "var(--display, sans-serif)",
+              fontSize: "12px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "1.2px",
+              color: "#6C7A75",
+            }}
+          >
+            Select Semester
+          </span>
+          <div style={{ flex: 1, height: "1px", backgroundColor: "#E3EAE6" }} />
         </div>
 
-        {/* Mobile: 1 col → sm: 2 col → lg: 4 col */}
-        <div style={{ display:"grid", gridTemplateColumns:"1fr", gap:10 }}
-          className="lt-grid">
+        {/* Semester Cards Grid */}
+        <div
+          style={{ display: "grid", gridTemplateColumns: "1fr", gap: "16px" }}
+          className="lt-grid"
+        >
           {SEMESTERS.map((sem, idx) => {
-            const color = SEM_COLORS[idx];
+            const accentColor = SEM_COLORS[idx % SEM_COLORS.length];
             return (
-              <Link key={sem.id} to={`/semester/${sem.id}`}
-                style={{ textDecoration:"none" }}>
-                <div className="card" style={{
-                  display:"flex", alignItems:"stretch",
-                  overflow:"hidden", cursor:"pointer",
-                  borderLeft:`4px solid ${color}`,
-                  transition:"box-shadow 0.2s, transform 0.18s",
-                  minHeight:72,
-                }}
-                  onTouchStart={e => { e.currentTarget.style.transform="scale(0.98)"; }}
-                  onTouchEnd={e => { e.currentTarget.style.transform=""; }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.boxShadow="var(--sh-md)";
-                    e.currentTarget.style.transform="translateX(4px)";
+              <Link
+                key={sem.id}
+                to={`/semester/${sem.id}`}
+                style={{ textDecoration: "none" }}
+              >
+                <div
+                  className="pro-card"
+                  style={{
+                    display: "flex",
+                    alignItems: "stretch",
+                    backgroundColor: "#FFFFFF",
+                    borderRadius: "14px",
+                    border: "1px solid #E8EFEB",
+                    overflow: "hidden",
+                    minHeight: "84px",
+                    boxShadow: "0 2px 6px rgba(0, 0, 0, 0.02)",
+                    transition: "all 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.boxShadow="var(--sh-sm)";
-                    e.currentTarget.style.transform="";
-                  }}>
-
-                  {/* Level badge */}
-                  <div style={{
-                    width:"clamp(68px,18vw,88px)",
-                    minWidth:"clamp(68px,18vw,88px)",
-                    background:`linear-gradient(135deg,${color},${color}cc)`,
-                    display:"flex", alignItems:"center",
-                    justifyContent:"center", flexShrink:0,
-                  }}>
-                    <span style={{
-                      fontFamily:"var(--display)", fontWeight:800,
-                      fontSize:"clamp(24px,6vw,36px)",
-                      color:"#fff", lineHeight:1,
-                      letterSpacing:"-1px",
-                      textShadow:"0 2px 8px rgba(0,0,0,0.20)",
-                    }}>
+                >
+                  {/* Left Label Accent Block */}
+                  <div
+                    style={{
+                      width: "82px",
+                      minWidth: "82px",
+                      backgroundColor: accentColor,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#FFFFFF",
+                      position: "relative",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--display, sans-serif)",
+                        fontWeight: 800,
+                        fontSize: "26px",
+                        letterSpacing: "-0.5px",
+                      }}
+                    >
                       {sem.label}
                     </span>
                   </div>
 
-                  {/* Info */}
-                  <div style={{ flex:1, padding:"clamp(10px,3vw,14px) 12px",
-                    minWidth:0, display:"flex", flexDirection:"column",
-                    justifyContent:"center" }}>
-                    <p style={{
-                      fontFamily:"var(--display)", fontWeight:700,
-                      fontSize:"clamp(14px,3.5vw,17px)",
-                      color:"var(--ink)", marginBottom:3, lineHeight:1.25,
-                    }}>
+                  {/* Course Details Info */}
+                  <div
+                    style={{
+                      flex: 1,
+                      padding: "14px 18px",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <h3
+                      style={{
+                        fontFamily: "var(--display, sans-serif)",
+                        fontWeight: 700,
+                        fontSize: "16px",
+                        color: "#111B18",
+                        marginBottom: "3px",
+                        lineHeight: 1.25,
+                      }}
+                    >
                       {sem.name}
-                    </p>
-                    <p style={{
-                      fontFamily:"var(--body)", fontSize:"clamp(11px,2.5vw,13px)",
-                      color:"var(--ink3)", marginBottom:8,
-                    }}>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "var(--body, sans-serif)",
+                        fontSize: "12px",
+                        color: "#6C7A75",
+                        marginBottom: "8px",
+                        fontWeight: 400,
+                      }}
+                    >
                       Level {sem.level} · Term {sem.term}
                     </p>
-                    <span style={{
-                      display:"inline-flex", alignItems:"center", gap:4,
-                      fontFamily:"var(--display)", fontWeight:700,
-                      fontSize:"clamp(10px,2vw,12px)",
-                      padding:"3px 10px", borderRadius:"var(--r-pill)",
-                      background:`${color}14`, color,
-                      border:`1px solid ${color}28`,
-                      width:"fit-content",
-                    }}>
-                      <span className="ms sm" style={{ fontSize:12, color }}>menu_book</span>
-                      {sem.courses.length} Courses
-                    </span>
+
+                    <div
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 5,
+                        fontSize: "11px",
+                        fontWeight: 600,
+                        padding: "3px 9px",
+                        borderRadius: "6px",
+                        backgroundColor: "#F2F6F4",
+                        color: accentColor,
+                        width: "fit-content",
+                        border: "1px solid #E2EBE6",
+                      }}
+                    >
+                      <span className="ms sm" style={{ fontSize: "13px" }}>
+                        auto_stories
+                      </span>
+                      {sem.courses?.length || 0} Modules
+                    </div>
                   </div>
 
-                  {/* Arrow */}
-                  <div style={{ display:"flex", alignItems:"center",
-                    paddingRight:12, flexShrink:0 }}>
-                    <span className="ms sm" style={{ color:"var(--ink4)", fontSize:20 }}>
-                      chevron_right
+                  {/* Navigation Arrow */}
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingRight: "16px",
+                      color: "#9CAAA4",
+                    }}
+                  >
+                    <span className="ms sm" style={{ fontSize: "18px" }}>
+                      arrow_forward
                     </span>
                   </div>
                 </div>
@@ -149,42 +292,99 @@ export default function LevelTerm({ user }) {
           })}
         </div>
 
-        {/* Stats */}
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)",
-          gap:10, marginTop:20 }}>
+        {/* Overview Stats */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            gap: "16px",
+            marginTop: "36px",
+          }}
+        >
           {[
-            { icon:"layers",    n:"8",    l:"Semesters"     },
-            { icon:"menu_book", n:"60+",  l:"Courses"       },
-            { icon:"groups",    n:"Free", l:"BAIUSTians" },
-          ].map(s => (
-            <div key={s.l} className="card"
-              style={{ padding:"clamp(12px,3vw,20px)", textAlign:"center" }}>
-              <span className="ms lg" style={{ color:"var(--mint)",
-                fontSize:"clamp(22px,5vw,28px)" }}>{s.icon}</span>
-              <div style={{ fontFamily:"var(--display)", fontWeight:800,
-                fontSize:"clamp(18px,4.5vw,26px)",
-                color:"var(--ink)", lineHeight:1, marginTop:6 }}>{s.n}</div>
-              <div style={{ width:16, height:2.5,
-                background:"linear-gradient(to right,var(--mint),var(--glow))",
-                borderRadius:2, margin:"7px auto" }} />
-              <div style={{ fontFamily:"var(--body)",
-                fontSize:"clamp(10px,2vw,12px)",
-                color:"var(--ink3)" }}>{s.l}</div>
+            { icon: "layers", val: "8", label: "Semesters" },
+            { icon: "menu_book", val: "60+", label: "Courses" },
+            { icon: "school", val: "Open", label: "Access" },
+          ].map((stat) => (
+            <div
+              key={stat.label}
+              style={{
+                backgroundColor: "#FFFFFF",
+                padding: "20px 16px",
+                borderRadius: "14px",
+                textAlign: "center",
+                border: "1px solid #E8EFEB",
+                boxShadow: "0 1px 3px rgba(0,0,0,0.02)",
+              }}
+            >
+              <span
+                className="ms"
+                style={{
+                  color: "#1B634B",
+                  fontSize: "24px",
+                  marginBottom: "4px",
+                  display: "block",
+                }}
+              >
+                {stat.icon}
+              </span>
+              <div
+                style={{
+                  fontFamily: "var(--display, sans-serif)",
+                  fontWeight: 800,
+                  fontSize: "22px",
+                  color: "#0A241C",
+                  lineHeight: 1.1,
+                }}
+              >
+                {stat.val}
+              </div>
+              <div
+                style={{
+                  fontFamily: "var(--body, sans-serif)",
+                  fontSize: "11px",
+                  color: "#6C7A75",
+                  fontWeight: 500,
+                  marginTop: "4px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.5px",
+                }}
+              >
+                {stat.label}
+              </div>
             </div>
           ))}
         </div>
-      </div>
+      </main>
 
+      {/* Modern Interaction CSS */}
       <style>{`
-        @media (min-width: 540px) {
-          .lt-grid      { grid-template-columns: repeat(2,1fr) !important; }
-          .hero-illus   { margin-top: -1rem; }
+        .pro-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 24px rgba(15, 56, 44, 0.08) !important;
+          border-color: #D3E0D9 !important;
         }
-        @media (min-width: 860px) {
-          .lt-grid { grid-template-columns: repeat(4,1fr) !important; }
+
+        .btn-primary-hover:hover {
+          background-color: #144D3A !important;
+          transform: translateY(-1px);
         }
-        @media (max-width: 380px) {
-          .hero-illus { display: none !important; }
+
+        .btn-outline-hover:hover {
+          background-color: #F2F6F4 !important;
+          border-color: #C2D1C9 !important;
+        }
+
+        @media (min-width: 580px) {
+          .lt-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+
+        @media (min-width: 992px) {
+          .lt-grid {
+            grid-template-columns: repeat(4, 1fr) !important;
+          }
         }
       `}</style>
     </div>
